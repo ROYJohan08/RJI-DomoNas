@@ -1,6 +1,7 @@
 # 0. Sommaire.
 
 1. Matériel.
+2. Logiciel.
 
 # 1. Matériel.
 
@@ -11,7 +12,7 @@
 - Alimentation : [CORSAIR CX550](https://www.amazon.fr/CORSAIR-CX550-ATX-550W-Alimentation/dp/B0CK8MXWK1/ref=sr_1_1?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3GKBB81X4W00M&keywords=alim+modulaire+500&qid=1706515268&s=computers&sprefix=alim+modulaire%2Ccomputers%2C783&sr=1-1)
 
 # 2. Logiciel.
-- Exploitaatiion : [Lubuntu](https://lubuntu.fr/)
+- Exploitaation : [Lubuntu](https://lubuntu.fr/)
 - Fichier : [Samba](https://doc.ubuntu-fr.org/samba)
 - Virtualisation : [Docker](https://docs.docker.com/engine/install/ubuntu/)
   - Web : [Lamp](https://hub.docker.com/r/lioshi/lamp)
