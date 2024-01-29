@@ -1,7 +1,7 @@
 # 0. Sommaire.
 
-1. Matériel.
-2. Logiciel.
+1. [Matériel](#1-matériel).
+2. [Logiciel](#2-Logiciel).
 
 # 1. Matériel.
 
