@@ -15,3 +15,4 @@ apt-get install net-tools -y # Install network tools.
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y # Instlall Docker and Install docker dependency.
 apt-get install glances -y #Install glances.
 
+
