@@ -18,4 +18,7 @@ apt-get install glances -y #Install glances.
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/smb.conf
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old
 cp smb.conf /etc/samba/
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/fstab
+mv /etc/fstab /etc/fstab.old
+cp fstab /etc/
 
