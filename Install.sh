@@ -14,11 +14,9 @@ apt-get install net-tools -y # Install network tools.
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y # Instlall Docker and Install docker dependency.
 apt-get install glances -y #Install glances.
 
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/smb.conf
+wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old
 cp smb.conf /etc/samba/
 
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/fstab
-mv /etc/fstab /etc/fstab.old
-cp fstab /etc/
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh
 
