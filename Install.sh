@@ -1,5 +1,4 @@
 #!/bin/bash
-sudo su # Get root privilege.
 
 apt-get install ca-certificates curl gnupg -y # Install Docker - Install certificate, copy from web et compiler.
 install -m 0755 -d /etc/apt/keyrings # Install Docker - Copy file to aa directory as uncompilated.
@@ -18,6 +17,7 @@ apt-get install glances -y #Install glances.
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/smb.conf
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old
 cp smb.conf /etc/samba/
+
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/fstab
 mv /etc/fstab /etc/fstab.old
 cp fstab /etc/
