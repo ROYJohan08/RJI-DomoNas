@@ -16,7 +16,12 @@ apt-get install glances -y #Install glances.
 
 wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old
-cp smb.conf /etc/samba/
+mv smb.conf /etc/samba/smb.conf
 
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh
+
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
+mkdir /etc/RJIDocker/
+mv Docker.sh /etc/RJIDocker/Docker.sh
+
 
