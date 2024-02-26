@@ -92,6 +92,44 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias sudo='sudo '
+alias statussamba='systemctl status smb'
+alias startsamba='systemctl start smb'
+alias stopsamba='systemctl stop smb'
+alias restartsamba='systemctl restart smb'
+
+alias starthomeassistant='bash /etc/RJIDocker/Docker.sh start homeassistant'
+alias stophomeassistant='bash /etc/RJIDocker/Docker.sh stop homeassistant'
+alias restarthomeassistant='bash /etc/RJIDocker/Docker.sh restart homeassistant'
+
+alias startseedbox='bash /etc/RJIDocker/Docker.sh start seedbox'
+alias stopseedbox='bash /etc/RJIDocker/Docker.sh stop seedbox'
+alias restartseedbox='bash /etc/RJIDocker/Docker.sh restart seedbox'
+
+alias startdownbox='bash /etc/RJIDocker/Docker.sh start downbox'
+alias stopdownbox='bash /etc/RJIDocker/Docker.sh stop downbox'
+alias restartdownbox='bash /etc/RJIDocker/Docker.sh restart downbox'
+
+alias startjellyfin='bash /etc/RJIDocker/Docker.sh start jellyfin'
+alias stopjellyfin='bash /etc/RJIDocker/Docker.sh stop jellyfin'
+alias restartjellyfin='bash /etc/RJIDocker/Docker.sh restart jellyfin'
+
+alias startnextcloud='bash /etc/RJIDocker/Docker.sh start nextcloud'
+alias stopnextcloud='bash /etc/RJIDocker/Docker.sh stop nextcloud'
+alias restartnextcloud='bash /etc/RJIDocker/Docker.sh restart nextcloud'
+
+alias startlamp='bash /etc/RJIDocker/Docker.sh start lamp'
+alias stoplamp='bash /etc/RJIDocker/Docker.sh stop lamp'
+alias restartlamp='bash /etc/RJIDocker/Docker.sh restart lamp'
+
+alias startfilebrowser='bash /etc/RJIDocker/Docker.sh start filebrowser'
+alias stopfilebrowser='bash /etc/RJIDocker/Docker.sh stop filebrowser'
+alias restartfilebrowser='bash /etc/RJIDocker/Docker.sh restart filebrowser'
+
+alias startglances='systemctl start glances.service'
+alias stopglances='systemctl stop glances.service'
+alias restartglances='systemctl restart glances.service'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
