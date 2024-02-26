@@ -18,6 +18,10 @@ wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.c
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old
 mv smb.conf /etc/samba/smb.conf
 
+wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/glances.service
+mv glances.service /etc/systemd/system/glances.service
+sudo systemctl enable glances.service
+
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh
 
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
