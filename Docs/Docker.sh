@@ -22,9 +22,9 @@ ncData="/media/Docs/NC-Data"
 ncPort=1004
 #FileBrowser variables
 fbRoot="/media/Runable/Docker/FB-Config"
-fbDatabase="/media/Runable/Docker/FB-Config/filebrowser.db"
-fbConfig="/media/Runable/Docker/FB-Config/settings.json"
-fbData="/media/"
+fbDatabase="/media/Runable/Docker/FB-Database/"
+fbConfig="/media/Runable/Docker/FB-Config/"
+fbData="/"
 fbPort=1005
 #LampVariable
 lmMedia="/media/Runable/Docker/LM-Data"
@@ -65,8 +65,8 @@ case $1 in
 			"lamp")
 				sudo docker run -d --name lamp --restart=unless-stopped -v $lmMedia:/var/www/html -p $lmPort:80 -p 3306:3306 lioshi/lamp:php5
 			;;
-     "filebrowser")
-				sudo docker run -d --name filebrowser --restart=unless-stopped -v $fbMedia:/srv -v $fbDatabase:/database/filebrowser.db -v $fbConfig:/config/settings.json -p $fbPort:80 filebrowser/filebrowser:s6
+                        "filebrowser")
+				sudo docker run -d --name filebrowser --restart=unless-stopped -v $fbData:/srv -v $fbDatabase:/database/ -v $fbConfig:/config/ -p $fbPort:80 filebrowser/filebrowser:s6
 			;;
 			"all")
 				sudo docker run -d --name homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $haConfig:/config -p $haPort:8123 homeassistant/home-assistant
