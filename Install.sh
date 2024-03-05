@@ -28,4 +28,7 @@ wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
 mkdir /etc/RJIDocker/
 mv Docker.sh /etc/RJIDocker/Docker.sh
 
+mv Docker.sh .bashrc .bashrc.old
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc
+
 
