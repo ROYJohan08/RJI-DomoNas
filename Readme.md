@@ -2,3 +2,4 @@
 2. send `sudo bash Install.sh`
 3. next install drives with `sudo bash InstallDrives.sh`
 4. add user to samba with `sudo smbpasswd -a %username%` replace %username% by the current user.
+5. send `sudo crontab -e` and add `@reboot systemctl start glances.service`
