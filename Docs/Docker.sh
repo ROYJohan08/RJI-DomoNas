@@ -16,6 +16,11 @@ jfConfig="/media/Runable/Docker/JF-Config"
 jfCache="/media/Runable/Docker/JF-Cache"
 jfMedia="/media/"
 jfPort=1003
+#Emby variables
+emConfig="/media/Runable/Docker/EM-Config"
+emCache="/media/Runable/Docker/EM-Cache"
+emMedia="/media/"
+emPort=1003
 #Nextcloud variables
 ncConfig="/media/Runable/Docker/NC-Config"
 ncData="/media/Docs/NC-Data"
@@ -38,7 +43,7 @@ case $1 in
 	"init")
 		case $2 in
 			"homeassistant")
-				sudo docker run -d --name homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $haConfig:/config -p $haPort:8123 homeassistant/home-assistant
+				sudo docker run -d --name homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $haConfig:/config -p $haPort:8123 homeassistant/home-assistant:latest
 			;;
 			"seedbox")
 				sudo git clone https://github.com/ronggang/transmission-web-control.git
@@ -53,23 +58,26 @@ case $1 in
 				sudo docker exec seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
 			;;
 			"downbox")
-				sudo docker run -d --name transmission --privileged --restart=unless-stopped -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $dbOvpn:/etc/openvpn/custom -v /media/Runable/Telechargements:/data -v $dbConfig:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VpnUser -e OPENVPN_PASSWORD=$Vpnpass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e LOCAL_NETWORK=192.168.1.0/24 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:3.6
-				sudo docker run -d --name downboxproxy --privileged --restart=unless-stopped --link transmission -p $dbPort:8080 haugene/transmission-openvpn-proxy
+				sudo docker run -d --name transmission --privileged --restart=unless-stopped -e TZ=CET -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $dbOvpn:/etc/openvpn/custom -v /media/Runable/Telechargements:/data -v $dbConfig:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VpnUser -e OPENVPN_PASSWORD=$Vpnpass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e LOCAL_NETWORK=192.168.1.0/24 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:latest
+				sudo docker run -d --name downboxproxy --privileged --restart=unless-stopped -e TZ=CET --link transmission -p $dbPort:8080 haugene/transmission-openvpn-proxy:latest
 			;;
 			"jellyfin")
-				sudo docker run -d --name jellyfin  --restart=unless-stopped -v $jfConfig:/config -v $jfCache:/cache -v $jfMedia:/media -p $jfPort:8096 -p 8920:8920 linuxserver/jellyfin:latest
+				sudo docker run -d --name jellyfin  --restart=unless-stopped -e TZ=CET -v $jfConfig:/config -v $jfCache:/cache -v $jfMedia:/media -p $jfPort:8096 -p 8920:8920 linuxserver/jellyfin:latest
+			;;
+   			"emby")
+				sudo docker run -d  --name emby  --restart=unless-stopped -e TZ=CET -v $emConfig:/config -v $emMedia:/mnt/share1 --net=host  --device /dev/dri:/dev/dri  --gpus all  -p $emPort:8096 -p 8920:8920 --env GIDLIST=100 --restart emby/embyserver:latest
 			;;
 			"nextcloud")
-				sudo docker run -d --name nextcloud --restart=unless-stopped -p $ncPort:80 -v $ncConfig:/var/www/html/config -v $ncData:/data nextcloud
+				sudo docker run -d --name nextcloud --restart=unless-stopped -e TZ=CET -p $ncPort:80 -v $ncConfig:/var/www/html/config -v $ncData:/data nextcloud:latest
 			;;
 			"lamp")
-				sudo docker run -d --name lamp --restart=unless-stopped -v $lmMedia:/var/www/html -p $lmPort:80 -p 3306:3306 lioshi/lamp:php5
+				sudo docker run -d --name lamp --restart=unless-stopped -e TZ=CET -v $lmMedia:/var/www/html -p $lmPort:80 -p 3306:3306 lioshi/lamp:latest
 			;;
                         "filebrowser")
-				sudo docker run -d --name filebrowser --restart=unless-stopped -v $fbData:/srv -v $fbDatabase:/database/ -v $fbConfig:/config/ -p $fbPort:80 filebrowser/filebrowser:s6
+				sudo docker run -d --name filebrowser --restart=unless-stopped -e TZ=CET -v $fbData:/srv -v $fbDatabase:/database/ -v $fbConfig:/config/ -p $fbPort:80 filebrowser/filebrowser:latest
 			;;
 			"all")
-				sudo docker run -d --name homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $haConfig:/config -p $haPort:8123 homeassistant/home-assistant
+				sudo docker run -d --name homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $haConfig:/config -p $haPort:8123 homeassistant/home-assistant:latest
 				sudo git clone https://github.com/ronggang/transmission-web-control.git
 				sudo mkdir $sbConfig/GUI/
 				sudo mv transmission-web-control/src/ $sbConfig/GUI/
@@ -80,12 +88,12 @@ case $1 in
 				sudo docker exec seedbox cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
 				sudo docker exec seedbox cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
 				sudo docker exec seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
-				#sudo docker run -d --name transmission --privileged --restart=unless-stopped -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $dbOvpn:/etc/openvpn/custom -v $dbTelechargement:/data/completed -v $dbConfig:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VpnUser -e OPENVPN_PASSWORD=$Vpnpass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e LOCAL_NETWORK=192.168.1.0/24 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:3.6
-				sudo docker run -d --name transmission --privileged --restart=unless-stopped -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $dbOvpn:/etc/openvpn/custom -v /media/Runable/Telechargements:/data -v $dbConfig:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VpnUser -e OPENVPN_PASSWORD=$Vpnpass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e LOCAL_NETWORK=192.168.1.0/24 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:3.6
-				sudo docker run -d --name downboxproxy --privileged --restart=unless-stopped --link transmission -p $dbPort:8080 haugene/transmission-openvpn-proxy
-				sudo docker run -d --name jellyfin  --restart=unless-stopped -v $jfConfig:/config -v $jfCache:/cache -v $jfMedia:/media -p $jfPort:8096 -p 8920:8920 linuxserver/jellyfin:latest
-				sudo docker run -d --name nextcloud --restart=unless-stopped -p $ncPort:80 -v $ncConfig:/var/www/html/config -v $ncData:/data nextcloud
-				sudo docker run -d --name lamp --restart=unless-stopped -v $lmMedia:/var/www/html -p $lmPort:80 -p 3306:3306 lioshi/lamp:php5
+   				sudo docker run -d --name transmission --privileged --restart=unless-stopped -e TZ=CET -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $dbOvpn:/etc/openvpn/custom -v /media/Runable/Telechargements:/data -v $dbConfig:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VpnUser -e OPENVPN_PASSWORD=$Vpnpass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e LOCAL_NETWORK=192.168.1.0/24 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:latest
+				sudo docker run -d --name downboxproxy --privileged --restart=unless-stopped -e TZ=CET --link transmission -p $dbPort:8080 haugene/transmission-openvpn-proxy:latest
+    				sudo docker run -d --name jellyfin  --restart=unless-stopped -e TZ=CET -v $jfConfig:/config -v $jfCache:/cache -v $jfMedia:/media -p $jfPort:8096 -p 8920:8920 linuxserver/jellyfin:latest
+				sudo docker run -d --name nextcloud --restart=unless-stopped -e TZ=CET -p $ncPort:80 -v $ncConfig:/var/www/html/config -v $ncData:/data nextcloud:latest
+    				sudo docker run -d --name lamp --restart=unless-stopped -e TZ=CET -v $lmMedia:/var/www/html -p $lmPort:80 -p 3306:3306 lioshi/lamp:latest
+	sudo docker run -d --name filebrowser --restart=unless-stopped -e TZ=CET -v $fbData:/srv -v $fbDatabase:/database/ -v $fbConfig:/config/ -p $fbPort:80 filebrowser/filebrowser:latest
 			;;
 		esac
 	;;
