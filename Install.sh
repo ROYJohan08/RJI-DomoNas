@@ -13,6 +13,7 @@ apt-get install samba -y # Install samba.
 apt-get install net-tools -y # Install network tools.
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y # Instlall Docker and Install docker dependency.
 apt-get install glances -y #Install glances.
+apt-get install cron -y #Install crontab
 
 wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old
