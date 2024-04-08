@@ -56,3 +56,6 @@ if test -f "$FILE"; then
 else 
     echo "no move"
 fi
+
+source credentials.sh
+echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User
