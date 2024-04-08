@@ -42,20 +42,21 @@ wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/mycron # Get Cro
 sudo crontab mycron # Set Crontab into crontab
 rm mycron # Remove temp crontab
 
-FILE=/etc/RJIDocker/credentials.sh
-if test -f "$FILE"; then
-    echo "credentials set"
+FILE=/etc/RJIDocker/credentials.sh # Locate default credential file
+if test -f "$FILE"; then # If file exist
+    echo "credentials set" #Nth
 else 
-    wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/credentials.sh
-    mv credentials.sh /etc/RJIDocker/credentials.sh
+    wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/credentials.sh # Get default credentials
+    mv credentials.sh /etc/RJIDocker/credentials.sh # Set default credential in place
 fi
-FILE=/media/Runable/Docker/credentials.sh
-if test -f "$FILE"; then
-    rm -rf /etc/RJIDocker/credentials.sh
-    cp /media/Runable/Docker/credentials.sh /etc/RJIDocker/credentials.sh
+FILE=/media/Runable/Docker/credentials.sh # Get OverRight credentials
+if test -f "$FILE"; then # if it exist
+    rm -rf /etc/RJIDocker/credentials.sh #Remove old credentials
+    cp /media/Runable/Docker/credentials.sh /etc/RJIDocker/credetials.sh # Set OverRight credentials
 else 
-    echo "no move"
+    echo "no move" # Nth
 fi
 
-source credentials.sh
-echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User
+source credentials.sh # Import credentials
+echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User # Create new smbuser
+
