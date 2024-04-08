@@ -14,3 +14,4 @@ mv Docker.sh /etc/RJIDocker/Docker.sh # Set the new Launcher
 rm -rf .bashrc.old # Remove Oldest BashRC
 mv .bashrc .bashrc.old# Save old bashRc
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc #Get new bashrc
+source .bashrc
