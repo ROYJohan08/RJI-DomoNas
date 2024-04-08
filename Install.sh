@@ -15,6 +15,8 @@ apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docke
 apt-get install glances -y #Install glances.
 apt-get install cron -y #Install crontab
 
+ubuntu-drivers list --gpgpu
+
 wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf # Get samba config.
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old # Save old config
 mv smb.conf /etc/samba/smb.conf #Set new config
