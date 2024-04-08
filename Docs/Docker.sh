@@ -1,311 +1,176 @@
 #!bin/sh
 
-Port-HA=1000
-Port-SB=1001
-Port-DB=1002
-Port-JF=1003
-Port-NC=1004
-Port-FB=1005
-Port-LM=80
+PortLM=80
+PortHA=1000
+PortSB=1001
+PortDB=1002
+PortJF=1003
+PortNC=1004
+PortFB=1005
+PortMQ=1006
 
-Config-HA="/media/Runable/Docker/HA-Config"
-Config-SB="/media/Runable/Docker/SB-Config"
-Config-DB="/media/Runable/Docker/DB-Config"
-Config-JF="/media/Runable/Docker/JF-Config"
-Config-NC="/media/Runable/Docker/NC-Config"
-Config-FB="/media/Runable/Docker/FB-Config/"
-Config-LM="/media/Runable/Docker/LM-Config/"
 
-Data-SB="/media/Runable/SeedBox"
-Data-DB="/media/Runable/DownBox"
-Data-JF="/media/"
-Data-NC="/media/Docs/NC-Data"
-Data-FB="/"
-Data-LM="/media/Runable/Docker/LM-Data"
+
+ConfigHA="/media/Runable/Docker/HA-Config"
+ConfigSB="/media/Runable/Docker/SB-Config"
+ConfigDB="/media/Runable/Docker/DB-Config"
+ConfigJF="/media/Runable/Docker/JF-Config"
+ConfigNC="/media/Runable/Docker/NC-Config"
+ConfigFB="/media/Runable/Docker/FB-Config/"
+ConfigLM="/media/Runable/Docker/LM-Config/"
+
+DataSB="/media/Runable/SeedBox"
+DataDB="/media/Runable/DownBox"
+DataJF="/media/"
+DataNC="/media/Docs/NC-Data"
+DataFB="/"
+DataLM="/media/Runable/Docker/LM-Data"
 
 VPNUser=""
 VPNPass=""
 User=""
 Pass=""
+
 case $1 in
-	"init")
-		case $2 in
-			"homeassistant")
-				sudo docker \
-					run \
-					-d \
-					--name homeassistant \
-					--privileged \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					-v $Config-HA:/config \
-					-p $Port-HA:8123 \
-					homeassistant/home-assistant:2023.5.4
-			;;
-			"seedbox")
-				sudo git clone https://github.com/ronggang/transmission-web-control.git
-				sudo mkdir $sbConfig/GUI/
-				sudo mv transmission-web-control/src/ $sbConfig/GUI/
-				sudo rm -rf transmission-web-control/
-				sudo docker \
-					run \
-					-d \
-					--name seedbox \
-					--privileged \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					-e USER=$User \
-					-e PASS=$Pass \
-					-p $Port-SB:9091 \
-					-p 51413:51413 \
-					-p 51413:51413/udp \
-					-v $Config-SB:/config \
-					-v $Data-SB:/downloads/complete  \
-					lscr.io/linuxserver/transmission:latest
-				sudo docker exec seedbox cp -r /usr/share/transmission/public_html/index.html /usr/share/transmission/public_html/index.html.old
-				sudo docker exec seedbox cp -r /config/GUI/src/index.html /usr/share/transmission/public_html/
-				sudo docker exec seedbox cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
-				sudo docker exec seedbox cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
-				sudo docker exec seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
-			;;
-			"downbox")
-				sudo docker \
-					run \
-					-d \
-					--name transmission \
-					--privileged \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					-p 9091:9091  \
-					-p 51415:51414 \
-					-p 51415:51414/udp \
-					--cap-add=NET_ADMIN \
-					-e TRANSMISSION_WEB_UI=transmission-web-control \
-					-v ${Config-DB}/custom:/etc/openvpn/custom \
-					-v $Data-DB:/data \
-					-v $Config-DB:/config \
-					-e OPENVPN_PROVIDER=CUSTOM \
-					-e OPENVPN_USERNAME=$VpnUser \
-					-e OPENVPN_PASSWORD=$Vpnpass \
-					-e UFW_ALLOW_GW_NET=true \
-					-e UFW_EXTRA_PORTS=9910,23561,443,83,9091 \
-					-e DROP_DEFAULT_ROUTE=true \
-					-e TRANSMISSION_RPC_USERNAME="$User" \
-					-e TRANSMISSION_RPC_PASSWORD="$Pass" \
-					-e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true \
-					-e TRANSMISSION_RPC_WHITELIST_ENABLED=false \
-					-e LOCAL_NETWORK=192.168.1.0/24 \
-					--log-driver json-file \
-					--log-opt max-size=10m \
-					haugene/transmission-openvpn:4.0
-				sudo docker \
-					run \
-					-d \
-					--name downboxproxy \
-					--privileged \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					--link transmission \
-					-p $Port-DB:8080 \
-					haugene/transmission-openvpn-proxy:3.4
-			;;
-			"jellyfin")
-				sudo docker \
-					run \
-					-d \
-					--name jellyfin  \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					-v $Config-JF:/config \
-					-v $Data-JF:/media \
-					-p $Port-JF:8096 \
-					-p 8920:8920 \
-					linuxserver/jellyfin:10.8.13
-			;;
-			"nextcloud")
-				sudo docker \
-					run \
-					-d \
-					--name nextcloud \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					-p $Port-NC:80 \
-					-v $Config-NC:/var/www/html/config \
-					-v $Data-NC:/data \
-					nextcloud:18.0.4
-			;;
-			"lamp")
-				sudo docker \
-					run \
-					-d \
-					--name lamp \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					-v $Data-LM:/var/www/html \
-					-p $Port-LM:80 \
-					-p 3306:3306 \
-					lioshi/lamp:php7
-			;;
-            "filebrowser")
-				sudo docker \
-					run \
-					-d \
-					--name filebrowser \
-					--restart=unless-stopped \
-					-e TZ=CET \
-					-v $Data-FB:/srv \
-					-v $Config-FB:/config/ \
-					-p $Port-FB:80 \
-					filebrowser/filebrowser:v1.10.0
-			;;
-		esac
+	"homeassistant")
+		sudo docker \
+			run \
+			-d \
+			--name homeassistant \
+			--privileged \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-v $ConfigHA:/config \
+			-p $PortHA:8123 \
+			homeassistant/home-assistant:2023.5.4
 	;;
-	"start")
-		case $2 in
-			"homeassistant")
-				sudo docker start homeassistant
-			;;
-			"seedbox")
-				sudo docker start seedbox
-			;;
-			"downbox")
-				sudo docker start transmission
-    			sudo docker start downboxproxy
-			;;
-			"jellyfin")
-				sudo docker start jellyfin
-			;;
-			"nextcloud")
-				sudo docker start nextcloud
-			;;
-			"lamp")
-				sudo docker start lamp
-			;;
-   			"filebrowser")
-				sudo docker start filebrowser
-			;;
-		esac
+	"seedbox")
+		sudo git clone https://github.com/ronggang/transmission-web-control.git
+		sudo mkdir $sbConfig/GUI/
+		sudo mv transmission-web-control/src/ $sbConfig/GUI/
+		sudo rm -rf transmission-web-control/
+		sudo docker \
+			run \
+			-d \
+			--name seedbox \
+			--privileged \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-e USER=$User \
+			-e PASS=$Pass \
+			-p $PortSB:9091 \
+			-p 51413:51413 \
+			-p 51413:51413/udp \
+			-v $ConfigSB:/config \
+			-v $DataSB:/downloads/complete  \
+			lscr.io/linuxserver/transmission:latest
+		sudo docker exec seedbox cp -r /usr/share/transmission/public_html/index.html /usr/share/transmission/public_html/index.html.old
+		sudo docker exec seedbox cp -r /config/GUI/src/index.html /usr/share/transmission/public_html/
+		sudo docker exec seedbox cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
+		sudo docker exec seedbox cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
+		sudo docker exec seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
 	;;
-	"stop")
-		case $2 in
-			"homeassistant")
-				sudo docker stop homeassistant
-			;;
-			"seedbox")
-				sudo docker stop seedbox
-			;;
-			"downbox")
-				sudo docker stop transmission
-    			sudo docker stop downboxproxy
-			;;
-   			"jellyfin")
-				sudo docker stop jellyfin
-			;;
-			"nextcloud")
-				sudo docker stop nextcloud
-			;;
-			"lamp")
-				sudo docker stop lamp
-			;;
-   			"filebrowser")
-				sudo docker stop filebrowser
-			;;
-		esac
+	"downbox")
+		sudo docker \
+			run \
+			-d \
+			--name transmission \
+			--privileged \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-p 9091:9091  \
+			-p 51415:51414 \
+			-p 51415:51414/udp \
+			--cap-add=NET_ADMIN \
+			-e TRANSMISSION_WEB_UI=transmission-web-control \
+			-v ${ConfigDB}/custom:/etc/openvpn/custom \
+			-v $DataDB:/data \
+			-v $ConfigDB:/config \
+			-e OPENVPN_PROVIDER=CUSTOM \
+			-e OPENVPN_USERNAME=$VpnUser \
+			-e OPENVPN_PASSWORD=$Vpnpass \
+			-e UFW_ALLOW_GW_NET=true \
+			-e UFW_EXTRA_PORTS=9910,23561,443,83,9091 \
+			-e DROP_DEFAULT_ROUTE=true \
+			-e TRANSMISSION_RPC_USERNAME="$User" \
+			-e TRANSMISSION_RPC_PASSWORD="$Pass" \
+			-e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true \
+			-e TRANSMISSION_RPC_WHITELIST_ENABLED=false \
+			-e LOCAL_NETWORK=192.168.1.0/24 \
+			--log-driver json-file \
+			--log-opt max-size=10m \
+			haugene/transmission-openvpn:4.0
+		sudo docker \
+			run \
+			-d \
+			--name downboxproxy \
+			--privileged \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			--link transmission \
+			-p $PortDB:8080 \
+			haugene/transmission-openvpn-proxy:3.4
 	;;
-	"del")
-		case $2 in
-			"homeassistant")
-				sudo docker stop homeassistant
-				sudo docker rm homeassistant
-			;;
-   			"seedbox")
-				sudo docker stop seedbox
-				sudo docker rm seedbox
-			;;
-			"downbox")
-				sudo docker stop transmission
-				sudo docker rm transmission
-				sudo docker stop downboxproxy
-				sudo docker rm downboxproxy
-			;;
-   			"jellyfin")
-				sudo docker stop jellyfin
-				sudo docker rm jellyfin
-			;;
- 			"emby")
-				sudo docker stop emby
-				sudo docker rm emby
-			;;
-			"nextcloud")
-				sudo docker stop nextcloud
-				sudo docker rm nextcloud
-			;;
-			"lamp")
-				sudo docker stop lamp
-				sudo docker rm lamp
-			;;
-   			"filebrowser")
-				sudo docker stop filebrowser
-				sudo docker rm filebrowser
-			;;
-		esac
+	"jellyfin")
+		sudo docker \
+			run \
+			-d \
+			--name jellyfin  \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-v $ConfigJF:/config \
+			-v $DataJF:/media \
+			-p $PortJF:8096 \
+			-p 8920:8920 \
+			linuxserver/jellyfin:10.8.13
 	;;
-	"restart")
-		case $2 in
-			"homeassistant")
-				sudo docker stop homeassistant
-				sudo docker start homeassistant
-			;;
-			"seedbox")
-				sudo docker stop seedbox
-				sudo docker start seedbox
-			;;
-			"downbox")
-				sudo docker stop transmission
-				sudo docker start transmission
-				sudo docker stop downboxproxy
-				sudo docker start downboxproxy
-			;;
-   			"jellyfin")
-				sudo docker stop jellyfin
-				sudo docker start jellyfin
-			;;
-   			"emby")
-				sudo docker stop emby
-				sudo docker start emby
-			;;
-			"nextcloud")
-				sudo docker stop nextcloud
-				sudo docker start nextcloud
-			;;
-			"lamp")
-				sudo docker stop lamp
-				sudo docker start lamp
-			;;
-   			"filebrowser")
-				sudo docker stop filebrowser
-				sudo docker start filebrowser
-			;;
-		esac
+	"nextcloud")
+		sudo docker \
+			run \
+			-d \
+			--name nextcloud \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-p $PortNC:80 \
+			-v $ConfigNC:/var/www/html/config \
+			-v $DataNC:/data \
+			nextcloud:18.0.4
 	;;
-	"help")
- 		echo "sudo bash Docker.sh [DEMANDE] [SERVICE]"
-		echo ""
-		echo "[DEMANDE] : "
-		echo "-init : Create the docker"
-		echo "-start : Run the docker"
-		echo "-Restart : Restart the docker"
-		echo "-del : Delete the docker"
-		echo "-recover : Delete the docker and recreate it"
-		echo ""
-		echo "[SERVICE] : "
-		echo "-homeassistant"
-		echo "-seedbox"
-		echo "-downbox"
-		echo "-jellyfin"
-		echo "-all"
+	"lamp")
+		sudo docker \
+			run \
+			-d \
+			--name lamp \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-v $DataLM:/var/www/html \
+			-p $PortLM:80 \
+			-p 3306:3306 \
+			lioshi/lamp:php7
 	;;
-	*)
-		echo "Invalid command, please use help arg for help"
+	"filebrowser")
+		sudo docker \
+			run \
+			-d \
+			--name filebrowser \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-v $DataFB:/srv \
+			-v $ConfigFB:/config/ \
+			-p $PortFB:80 \
+			filebrowser/filebrowser:v1.10.0
+	;;
+	"mqtt")
+		sudo docker \
+			run \
+			-d \
+			--name filebrowser \
+			--restart=unless-stopped \
+			-e TZ=CET \
+			-v $ConfigMQ:/mosquitto/config
+			-v $DataMQ:/mosquitto/data
+			-p $PortMQ:80 \
+			eclipse-mosquitto:2.0
 	;;
 esac
+;;
