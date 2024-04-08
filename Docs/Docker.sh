@@ -1,5 +1,7 @@
 #!bin/sh
 
+source credentials.sh
+
 PortLM=80
 PortHA=1000
 PortSB=1001
@@ -25,11 +27,6 @@ DataJF="/media/"
 DataNC="/media/Docs/NC-Data"
 DataFB="/"
 DataLM="/media/Runable/Docker/LM-Data"
-
-VPNUser=""
-VPNPass=""
-User=""
-Pass=""
 
 case $1 in
 	"homeassistant")
