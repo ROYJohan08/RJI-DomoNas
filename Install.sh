@@ -42,3 +42,17 @@ wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/mycron # Get Cro
 sudo crontab mycron # Set Crontab into crontab
 rm mycron # Remove temp crontab
 
+FILE=/etc/RJIDocker/credentials.sh
+if test -f "$FILE"; then
+    echo "credentials set"
+else 
+    wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/credentials.sh
+    mv credentials.sh /etc/RJIDocker/credentials.sh
+fi
+FILE=/media/Runable/Docker/credentials.sh
+if test -f "$FILE"; then
+    rm -rf /etc/RJIDocker/credentials.sh
+    cp /media/Runable/Docker/credentials.sh /etc/RJIDocker/credentials.sh
+else 
+    echo "no move"
+fi
