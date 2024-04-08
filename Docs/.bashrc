@@ -93,42 +93,17 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias sudo='sudo '
-alias statussamba='status smbd'
-alias startsamba='start smbd'
-alias stopsamba='stop smbd'
-alias restartsamba='restart smbd'
+alias samba='service smbd'
 
-alias starthomeassistant='bash /etc/RJIDocker/Docker.sh start homeassistant'
-alias stophomeassistant='bash /etc/RJIDocker/Docker.sh stop homeassistant'
-alias restarthomeassistant='bash /etc/RJIDocker/Docker.sh restart homeassistant'
+alias homeassistant='bash /etc/RJIDocker/Docker.sh homeassistant'
+alias seedbox='bash /etc/RJIDocker/Docker.sh seedbox'
+alias downbox='bash /etc/RJIDocker/Docker.sh start downbox'
+alias jellyfin='bash /etc/RJIDocker/Docker.sh start jellyfin'
+alias nextcloud='bash /etc/RJIDocker/Docker.sh start nextcloud'
+alias lamp='bash /etc/RJIDocker/Docker.sh start lamp'
+alias filebrowser='bash /etc/RJIDocker/Docker.sh start filebrowser'
 
-alias startseedbox='bash /etc/RJIDocker/Docker.sh start seedbox'
-alias stopseedbox='bash /etc/RJIDocker/Docker.sh stop seedbox'
-alias restartseedbox='bash /etc/RJIDocker/Docker.sh restart seedbox'
-
-alias startdownbox='bash /etc/RJIDocker/Docker.sh start downbox'
-alias stopdownbox='bash /etc/RJIDocker/Docker.sh stop downbox'
-alias restartdownbox='bash /etc/RJIDocker/Docker.sh restart downbox'
-
-alias startjellyfin='bash /etc/RJIDocker/Docker.sh start jellyfin'
-alias stopjellyfin='bash /etc/RJIDocker/Docker.sh stop jellyfin'
-alias restartjellyfin='bash /etc/RJIDocker/Docker.sh restart jellyfin'
-
-alias startnextcloud='bash /etc/RJIDocker/Docker.sh start nextcloud'
-alias stopnextcloud='bash /etc/RJIDocker/Docker.sh stop nextcloud'
-alias restartnextcloud='bash /etc/RJIDocker/Docker.sh restart nextcloud'
-
-alias startlamp='bash /etc/RJIDocker/Docker.sh start lamp'
-alias stoplamp='bash /etc/RJIDocker/Docker.sh stop lamp'
-alias restartlamp='bash /etc/RJIDocker/Docker.sh restart lamp'
-
-alias startfilebrowser='bash /etc/RJIDocker/Docker.sh start filebrowser'
-alias stopfilebrowser='bash /etc/RJIDocker/Docker.sh stop filebrowser'
-alias restartfilebrowser='bash /etc/RJIDocker/Docker.sh restart filebrowser'
-
-alias startglances='systemctl start glances.service'
-alias stopglances='systemctl stop glances.service'
-alias restartglances='systemctl restart glances.service'
+alias glances='glances -w &'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
