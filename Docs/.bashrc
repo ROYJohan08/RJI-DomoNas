@@ -108,7 +108,8 @@ alias glances='glances -w &'
 alias agu='sudo apt-get update'
 alias agg='sudo apt-get upgrade'
 alias agd='sudo apt-get dist-upgrade'
-alias maj='agu && agg && agd'
+alias rjiup='sudo bash /etc/RJIDocker/Update.sh'
+alias maj='agu && agg && agd && rjiup'
 alias runable='cd /media/Runable'
 
 # Add an "alert" alias for long running commands.  Use like so:
