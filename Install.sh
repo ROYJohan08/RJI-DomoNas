@@ -57,6 +57,6 @@ else
     echo "no move" # Nth
 fi
 
-source credentials.sh # Import credentials
+source /etc/RJIDocker/credentials.sh # Import credentials
 echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User # Create new smbuser
 
