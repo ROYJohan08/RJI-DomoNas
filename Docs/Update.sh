@@ -16,6 +16,6 @@ rm -rf .bashrc # Save old bashRc
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc #Get new bashrc
 source .bashrc
 
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/mycron # Get Crontab
+wget https://github.com/ROYJohan08/RJI-DomoNas/raw/main/Docs/mycron # Get Crontab
 sudo crontab mycron # Set Crontab into crontab
 rm mycron # Remove temp crontab
