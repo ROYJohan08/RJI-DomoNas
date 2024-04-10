@@ -95,13 +95,7 @@ alias l='ls -CF'
 alias sudo='sudo '
 alias samba='service smbd'
 
-alias homeassistant='bash /etc/RJIDocker/Docker.sh homeassistant'
-alias seedbox='bash /etc/RJIDocker/Docker.sh seedbox'
-alias downbox='bash /etc/RJIDocker/Docker.sh start downbox'
-alias jellyfin='bash /etc/RJIDocker/Docker.sh start jellyfin'
-alias nextcloud='bash /etc/RJIDocker/Docker.sh start nextcloud'
-alias lamp='bash /etc/RJIDocker/Docker.sh start lamp'
-alias filebrowser='bash /etc/RJIDocker/Docker.sh start filebrowser'
+alias vm='bash /etc/RJIDocker/Docker.sh'
 
 alias glances='glances -w &'
 
