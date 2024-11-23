@@ -21,6 +21,10 @@ rm -rf Update.sh.old # Remove Oldest Update
 mv Update.sh Update.sh.old # Save old Update
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh #Get new Update
 
+rm -rf InstallDrives.sh.old # Remove Oldest Update
+mv InstallDrives.sh InstallDrives.sh.old # Save old Update
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh #Get new Update
+
 wget https://github.com/ROYJohan08/RJI-DomoNas/raw/main/Docs/mycron # Get Crontab
 sudo crontab mycron # Set Crontab into crontab
 rm mycron # Remove temp crontab
