@@ -50,7 +50,7 @@ case $1 in
 				sudo docker run -d --name nextcloud --restart=unless-stopped -e TZ=CET -p $PortNC:80 -v $ConfigNC:/var/www/html/config -v $DataNC:/data nextcloud:18.0.4
 			;;
 			"portainer")
-				sudo docker run -d --name portainer --restart=unless-stopped -p 8000:8000 -p 9443:9443 -p $PortPO:9000 -v /var/run/docker.sock:/var/run/docker.sock -v $ConfigPO:/data portainer/portainer-ce:2.21.4
+				sudo docker run -d --name portainer --restart=unless-stopped -e TZ=CET -p 8000:8000 -p 9443:9443 -p $PortPO:9000 -v /var/run/docker.sock:/var/run/docker.sock -v $ConfigSB:/data portainer/portainer-ce:latest
 			;;
 			"seedbox")
 				sudo git clone https://github.com/ronggang/transmission-web-control.git
