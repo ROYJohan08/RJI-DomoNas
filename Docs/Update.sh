@@ -1,20 +1,25 @@
 #!/bin/bash
 
-wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf # Get samba config.
 rm -rf /etc/samba/smb.conf.old # Remove oldest config
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old # Save old config
-mv smb.conf /etc/samba/smb.conf #Set new config
-service smbd restart #Restart samba
+wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf # Get samba config.
+mv smb.conf /etc/samba/smb.conf # Set new config
+service smbd restart # Restart samba
 
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh # Get Docker launcher
 mkdir /etc/RJIDocker/ # Create launcher folder
 rm -rf /etc/RJIDocker/Docker.sh # Remove old launcher
+mv /etc/RJIDocker/Docker.sh /etc/RJIDocker/Docker.sh.old # Save old config.
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh # Get Docker launcher
 mv Docker.sh /etc/RJIDocker/Docker.sh # Set the new Launcher
 
 rm -rf .bashrc.old # Remove Oldest BashRC
-rm -rf .bashrc # Save old bashRc
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc #Get new bashrc
-source .bashrc
+mv .bashrc .bashrc.old # Save old bashRc
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc # Get new bashrc
+source .bashrc # Restart alias.
+
+rm -rf Update.sh.old # Remove Oldest Update
+mv Update.sh Update.sh.old # Save old Update
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh #Get new Update
 
 wget https://github.com/ROYJohan08/RJI-DomoNas/raw/main/Docs/mycron # Get Crontab
 sudo crontab mycron # Set Crontab into crontab
