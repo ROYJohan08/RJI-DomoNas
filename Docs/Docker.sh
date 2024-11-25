@@ -38,7 +38,7 @@ case $1 in
 				sudo docker run -d --name lamp --restart=unless-stopped -e TZ=CET -v $DataLM:/var/www/html -p $PortLM:80 -p 3306:3306 lioshi/lamp:php7
 			;;
    			"homeassistant")
-				sudo docker run -d --init --name homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $ConfigHA:/config -p $PortHA:8123 homeassistant/home-assistant:stable
+				sudo docker run -d --name homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $ConfigHA:/config -p $PortHA:8123 homeassistant/home-assistant:stable
 			;;
 			"jellyfin")
 				sudo docker run -d --name jellyfin --restart=unless-stopped -e TZ=CET -v $ConfigJF:/config -v $DataJF:/media -p $PortJF:8096 -p 8920:8920 linuxserver/jellyfin:10.8.13
