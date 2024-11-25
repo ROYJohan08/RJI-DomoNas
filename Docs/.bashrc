@@ -96,6 +96,7 @@ alias sudo='sudo '
 alias samba='service smbd'
 
 alias vm='bash /etc/RJIDocker/Docker.sh'
+alias vmedit='nano /etc/RJIDocker/Docker.sh'
 
 alias glances='glances -w &'
 
