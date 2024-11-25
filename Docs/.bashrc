@@ -95,6 +95,7 @@ alias l='ls -CF'
 alias sudo='sudo '
 alias samba='service smbd'
 
+alias cdvm='cd /etc/RJIDocker/'
 alias vm='bash /etc/RJIDocker/Docker.sh'
 alias vmedit='nano /etc/RJIDocker/Docker.sh'
 alias vmls='docker ps'
@@ -106,6 +107,7 @@ alias agg='sudo apt-get upgrade'
 alias agd='sudo apt-get dist-upgrade'
 alias rjiup='sudo bash /etc/RJIDocker/Update.sh'
 alias maj='agu && agg && agd && rjiup'
+
 alias runable='cd /media/Runable'
 
 # Add an "alert" alias for long running commands.  Use like so:
