@@ -18,8 +18,9 @@ wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc # Get ne
 source .bashrc # Restart alias.
 
 rm -rf Update.sh.old # Remove Oldest Update
-mv Update.sh Update.sh.old # Save old Update
+mv /etc/RJIDocker/Update.sh /etc/RJIDocker/Update.sh.old # Save old Update
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh #Get new Update
+mv Update.sh /etc/RJIDocker/Update.sh # Move to folder
 
 rm -rf InstallDrives.sh.old # Remove Oldest Update
 mv InstallDrives.sh InstallDrives.sh.old # Save old Update
