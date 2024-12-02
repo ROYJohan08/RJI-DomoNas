@@ -96,7 +96,7 @@ alias sudo='sudo '
 alias samba='service smbd'
 
 alias cdvm='cd /etc/RJIDocker/'
-alias vm='bash /etc/RJIDocker/Docker.sh'
+alias vmsh='bash /etc/RJIDocker/Docker.sh'
 alias vmedit='nano /etc/RJIDocker/Docker.sh'
 alias vmls='docker ps'
 
