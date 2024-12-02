@@ -97,6 +97,7 @@ alias samba='service smbd'
 
 alias cdvm='cd /etc/RJIDocker/'
 alias vmedit='nano /etc/RJIDocker/Docker.sh'
+alias vmsh='bash /etc/RJIDocker/Docker.sh'
 alias vmls='docker ps'
 
 alias glances='glances -w &'
