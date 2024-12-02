@@ -204,36 +204,36 @@ case $1 in
 	"recover")
 		case $2 in
 			"homeassistant")
-				sudo vm rm homeassistant
-				sudo vm init homeassistant
+				sudo vmsh rm homeassistant
+				sudo vmsh init homeassistant
 			;;
 			"seedbox")
-				sudo vm rm seedbox
-				sudo vm init seedbox
+				sudo vmsh rm seedbox
+				sudo vmsh init seedbox
 			;;
 			"downbox")
-				sudo vm rm downbox
-				sudo vm init downbox
+				sudo vmsh rm downbox
+				sudo vmsh init downbox
 			;;
 			"jellyfin")
-				sudo vm rm jellyfin
-				sudo vm init jellyfin
+				sudo vmsh rm jellyfin
+				sudo vmsh init jellyfin
 			;;
 			"nextcloud")
-				sudo vm rm nextcloud
-				sudo vm init nextcloud
+				sudo vmsh rm nextcloud
+				sudo vmsh init nextcloud
 			;;
 			"lamp")
-				sudo vm rm lamp
-				sudo vm init lamp
+				sudo vmsh rm lamp
+				sudo vmsh init lamp
 			;;
 			"filebrowser")
-				sudo vm rm filebrowser
-				sudo vm init filebrowser
+				sudo vmsh rm filebrowser
+				sudo vmsh init filebrowser
 			;;
 			"mqtt")
-				sudo vm rm mqtt
-				sudo vm init mqtt
+				sudo vmsh rm mqtt
+				sudo vmsh init mqtt
 			;;
 		esac
 	;;
