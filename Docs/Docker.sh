@@ -82,7 +82,8 @@ case $1 in
 				sudo docker stop seedbox
 			;;
 			"downbox")
-				sudo docker stop downbox
+				sudo docker stop transmission
+    				sudo docker stop downboxproxy
 			;;
 			"jellyfin")
 				sudo docker stop jellyfin
@@ -112,8 +113,10 @@ case $1 in
 				sudo docker rm seedbox
 			;;
 			"downbox")
-				sudo docker stop downbox
-				sudo docker rm downbox
+				sudo docker stop downboxproxy
+				sudo docker rm downboxproxy
+				sudo docker stop transmission
+				sudo docker rm transmission
 			;;
 			"jellyfin")
 				sudo docker stop jellyfin
@@ -146,7 +149,8 @@ case $1 in
 				sudo docker start seedbox
 			;;
 			"downbox")
-				sudo docker start downbox
+				sudo docker start transmission
+    				sudo docker start downboxproxy
 			;;
 			"jellyfin")
 				sudo docker start jellyfin
@@ -176,8 +180,10 @@ case $1 in
 				sudo docker start seedbox
 			;;
 			"downbox")
-				sudo docker stop downbox
-				sudo docker start downbox
+				sudo docker stop downboxproxy
+				sudo docker start downboxproxy
+    				sudo docker stop transmission
+				sudo docker start transmission
 			;;
 			"jellyfin")
 				sudo docker stop jellyfin
