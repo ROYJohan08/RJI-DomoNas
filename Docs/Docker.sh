@@ -204,36 +204,36 @@ case $1 in
 	"recover")
 		case $2 in
 			"homeassistant")
-				sudo vmsh rm homeassistant
-				sudo vmsh init homeassistant
+				sudo bash /etc/RJIDocker/Docker.sh rm homeassistant
+				sudo bash /etc/RJIDocker/Docker.sh init homeassistant
 			;;
 			"seedbox")
-				sudo vmsh rm seedbox
-				sudo vmsh init seedbox
+				sudo bash /etc/RJIDocker/Docker.sh rm seedbox
+				sudo bash /etc/RJIDocker/Docker.sh init seedbox
 			;;
 			"downbox")
-				sudo vmsh rm downbox
-				sudo vmsh init downbox
+				sudo bash /etc/RJIDocker/Docker.sh rm downbox
+				sudo bash /etc/RJIDocker/Docker.sh init downbox
 			;;
 			"jellyfin")
-				sudo vmsh rm jellyfin
-				sudo vmsh init jellyfin
+				sudo bash /etc/RJIDocker/Docker.sh rm jellyfin
+				sudo bash /etc/RJIDocker/Docker.sh init jellyfin
 			;;
 			"nextcloud")
-				sudo vmsh rm nextcloud
-				sudo vmsh init nextcloud
+				sudo bash /etc/RJIDocker/Docker.sh rm nextcloud
+				sudo bash /etc/RJIDocker/Docker.sh init nextcloud
 			;;
 			"lamp")
-				sudo vmsh rm lamp
-				sudo vmsh init lamp
+				sudo bash /etc/RJIDocker/Docker.sh rm lamp
+				sudo bash /etc/RJIDocker/Docker.sh init lamp
 			;;
 			"filebrowser")
-				sudo vmsh rm filebrowser
-				sudo vmsh init filebrowser
+				sudo bash /etc/RJIDocker/Docker.sh rm filebrowser
+				sudo bash /etc/RJIDocker/Docker.sh init filebrowser
 			;;
 			"mqtt")
-				sudo vmsh rm mqtt
-				sudo vmsh init mqtt
+				sudo bash /etc/RJIDocker/Docker.sh rm mqtt
+				sudo bash /etc/RJIDocker/Docker.sh init mqtt
 			;;
 		esac
 	;;
