@@ -5,6 +5,7 @@ install -m 0755 -d /etc/apt/keyrings # Install Docker - Copy file to a directory
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg # Install Docker - Get dependency from web and compil it.
 chmod a+r /etc/apt/keyrings/docker.gpg # Install Docker - Give right to file.
 echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null # Install Docker - Add source to package list.
+sudo add-apt-repository ppa:alessandro-strada/ppa
 
 apt-get update -y # Update software.
 apt-get full-upgrade -y # Update firmware.
@@ -60,3 +61,6 @@ fi
 source /etc/RJIDocker/credentials.sh # Import credentials
 echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User # Create new smbuser
 
+sudo apt-get install google-drive-ocamlfuse
+google-drive-ocamlfuse -id $GoogleId -secret $GooglePass
+google-drive-ocamlfuse /media/Documents/GDrive/
