@@ -1,2 +1,3 @@
 @reboot sudo glances -w &
 @reboot maj
+@reboot google-drive-ocamlfuse /media/Documents/GDrive/
