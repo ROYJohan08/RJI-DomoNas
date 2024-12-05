@@ -43,6 +43,9 @@ wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/mycron # Get Cro
 sudo crontab mycron # Set Crontab into crontab
 rm mycron # Remove temp crontab
 
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python3 get-pip.py
+
 FILE=/etc/RJIDocker/credentials.sh # Locate default credential file
 if test -f "$FILE"; then # If file exist
     echo "credentials set" #Nth
