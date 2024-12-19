@@ -11,7 +11,7 @@ PortPO=1004 # Portainer port
 PortSB=1005 # SeedBox Port 
 PortDB=1006 # DownBox Port
 PortMQ=1007 # MQTT Port
-PortGO=1009 # Grocy port
+PortGO=1011 # Grocy port
 
 ConfigLM="/media/Runable/Docker/LM-Config/"
 ConfigHA="/media/Runable/Docker/HA-Config"
