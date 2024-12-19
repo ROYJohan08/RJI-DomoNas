@@ -11,6 +11,7 @@ PortPO=1004 # Portainer port
 PortSB=1005 # SeedBox Port 
 PortDB=1006 # DownBox Port
 PortMQ=1007 # MQTT Port
+PortGO=1009 # Grocy port
 
 ConfigLM="/media/Runable/Docker/LM-Config/"
 ConfigHA="/media/Runable/Docker/HA-Config"
@@ -22,6 +23,7 @@ ConfigSB="/media/Runable/Docker/SB-Config"
 ConfigDB="/media/Runable/Docker/DB-Config"
 Config2DB="/media/Runable/Docker/DB-Config/custom"
 ConfigMQ="/media/Runable/Docker/MQ-Config/"
+ConfigGO="/media/Runable/Docker/GO-Config/"
 
 DataLM="/media/Runable/Docker/LM-Data"
 DataJF="/media/"
@@ -71,6 +73,9 @@ case $1 in
 			"mqtt")
 				sudo docker run -d --name mqtt --restart=unless-stopped -e TZ=CET -v $ConfigMQ:/mosquitto/config -v $DataMQ:/mosquitto/data -p $PortMQ:1883 -p 9001:9001  eclipse-mosquitto:2.0
 			;;
+   			"grocy")
+				sudo docker run -d --name grocy --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:9283  lscr.io/linuxserver/grocy:latest
+			;;
 		esac
 	;;
 	"stop")
@@ -99,6 +104,9 @@ case $1 in
 			;;
 			"mqtt")
 				sudo docker stop mqtt
+			;;
+   			"grocy")
+				sudo docker stop grocy
 			;;
 		esac
 	;;
@@ -138,6 +146,10 @@ case $1 in
 				sudo docker stop mqtt
 				sudo docker rm mqtt
 			;;
+   			"grocy")
+				sudo docker stop grocy
+				sudo docker rm grocy
+			;;
 		esac
 	;;
 	"start")
@@ -166,6 +178,9 @@ case $1 in
 			;;
 			"mqtt")
 				sudo docker start mqtt
+			;;
+			"grocy")
+				sudo docker start grocy
 			;;
 		esac
 	;;
@@ -205,6 +220,10 @@ case $1 in
 				sudo docker stop mqtt
 				sudo docker start mqtt
 			;;
+   			"grocy")
+				sudo docker stop grocy
+				sudo docker start grocy
+			;;
 		esac
 	;;
 	"recover")
@@ -240,6 +259,10 @@ case $1 in
 			"mqtt")
 				sudo bash /etc/RJIDocker/Docker.sh rm mqtt
 				sudo bash /etc/RJIDocker/Docker.sh init mqtt
+			;;
+   			"grocy")
+				sudo bash /etc/RJIDocker/Docker.sh rm grocy
+				sudo bash /etc/RJIDocker/Docker.sh init grocy
 			;;
 		esac
 	;;
