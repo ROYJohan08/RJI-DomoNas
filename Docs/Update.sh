@@ -1,8 +1,9 @@
 #!/bin/bash
+#Version 202501021737
 
 #Save the version of the Update
 touch /etc/RJIDocker/Version.ver
-echo "2501020004" > /etc/RJIDocker/Version.ver
+echo "#Version 202501021737" > /etc/RJIDocker/Version.ver
 
 #UPDATE /etc/RJIDocker/Update_suite.sh
 rm -rf /etc/RJIDocker/Update_suite.sh.old #Remove Oldest Update.sh
