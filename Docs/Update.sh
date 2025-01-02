@@ -1,9 +1,9 @@
 #!/bin/bash
-#Version 202501021749
+#Version 202501022014
 
 #Save the version of the Update
 touch /etc/RJIDocker/Version.ver
-echo "#Version 202501021749" > /etc/RJIDocker/Version.ver
+echo "#Version 202501022014" > /etc/RJIDocker/Version.ver
 
 mkdir /etc/RJIDocker/ # Create launcher folder
 mkdir /etc/RJIDocker/old # Create launcher folder
