@@ -33,4 +33,4 @@ rm ~/mycron # Remove temp crontab
 
 rm -rf /etc/RJIDocker/TvShowStorage.py.old # Remove Oldest Update
 mv /etc/RJIDocker/TvShowStorage.py /etc/RJIDocker/TvShowStorage.py.old # Save old Update
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/TvShowStorage.py -P /etc/RJIDocker/  > /dev/null #Get new Update
+wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/TvShowStorage.py -P /etc/RJIDocker/  > /dev/null
