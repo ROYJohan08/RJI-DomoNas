@@ -5,9 +5,9 @@ mkdir /etc/RJIDocker/ # Create launcher folder
 mkdir /etc/RJIDocker/old # Create launcher folder
 
 rm -rf /etc/RJIDocker/old/Update.sh.old #Remove Oldest Update.sh
-mv /etc/RJIDocker/Update_suite.sh /etc/RJIDocker/old/Update.sh.old #Save old Update.sh
+mv /etc/RJIDocker/Update.sh /etc/RJIDocker/old/Update.sh.old #Save old Update.sh
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh #Get new Update.sh
-mv Update_suite.sh /etc/RJIDocker/Update.sh #Move Udate.sh to the good directory
+mv Update.sh /etc/RJIDocker/Update.sh #Move Udate.sh to the good directory
 
 rm -rf /etc/RJIDocker/old/smb.conf.old # Remove oldest config
 mv /etc/samba/smb.conf /etc/RJIDocker/old/smb.conf.old # Save old config
