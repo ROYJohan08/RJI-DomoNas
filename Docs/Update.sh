@@ -13,7 +13,8 @@ wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh -P /et
 
 rm -rf ~/.bashrc.old # Remove Oldest BashRC
 mv ~/.bashrc ~/.bashrc.old # Save old bashRc
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc -P ~/ # Get new bashrc
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc -P ~/ -O .bashrc.new # Get new bashrc
+c -rf ~/.bashrc.new ~/.bashrc
 source ~/.bashrc # Restart alias.
 
 rm -rf /etc/RJIDocker/Update.sh.old # Remove Oldest Update
