@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#Save the version of the Update
+touch /etc/RJIDocker/Version.ver
+echo "2501020003" > /etc/RJIDocker/Version.ver
+
 rm -rf /etc/samba/smb.conf.old # Remove oldest config
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old # Save old config
 wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf -P /etc/samba/ > /dev/null # Get samba config.
