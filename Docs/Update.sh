@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#Save the version of the Update
+touch /etc/RJIDocker/Version.ver
+echo "2501020001" > /etc/RJIDocker/Version.ver
+
 #UPDATE /etc/RJIDocker/Update.sh
 
 rm -rf /etc/RJIDocker/Update.sh.old #Remove Oldest Update.sh
