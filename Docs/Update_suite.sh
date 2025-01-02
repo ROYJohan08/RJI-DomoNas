@@ -1,19 +1,20 @@
 #!/bin/bash
-
-#Save the version of the Update
-touch /etc/RJIDocker/Version.ver
-echo "2501020003" > /etc/RJIDocker/Version.ver
+#Version 202501021737
+rm -rf /etc/RJIDocker/Update.sh.old #Remove Oldest Update.sh
+mv /etc/RJIDocker/Update_suite.sh /etc/RJIDocker/Update.sh.old #Save old Update.sh
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh #Get new Update.sh
+mv Update_suite.sh /etc/RJIDocker/Update.sh #Move Udate.sh to the good directory
 
 rm -rf /etc/samba/smb.conf.old # Remove oldest config
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old # Save old config
-wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf -P /etc/samba/ > /dev/null # Get samba config.
+wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf -P /etc/samba/ # Get samba config.
 service smbd restart # Restart samba
 
 mkdir /etc/RJIDocker/ # Create launcher folder
 
 rm -rf /etc/RJIDocker/Docker.sh.old # Remove oldest launcher
 mv /etc/RJIDocker/Docker.sh /etc/RJIDocker/Docker.sh.old # Save old config.
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh -P /etc/RJIDocker/ > /dev/null # Get Docker launcher
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh -P /etc/RJIDocker/ # Get Docker launcher
 
 rm -rf ~/.bashrc.old # Remove Oldest BashRC
 cp ~/.bashrc ~/.bashrc.old # Save old bashRc
