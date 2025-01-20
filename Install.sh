@@ -63,7 +63,3 @@ fi
 
 source /etc/RJIDocker/credentials.sh # Import credentials
 echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User # Create new smbuser
-
-sudo apt-get install google-drive-ocamlfuse
-google-drive-ocamlfuse -id $GoogleId -secret $GooglePass
-google-drive-ocamlfuse /media/Documents/GDrive/
