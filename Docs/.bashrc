@@ -110,9 +110,9 @@ alias cddocs='cd /media/Docs01/'
 
 alias glances='glances -w &'
 
-alias agu='sudo apt-get update'
-alias agg='sudo apt-get upgrade'
-alias agd='sudo apt-get dist-upgrade'
+alias agu='sudo apt-get update -y'
+alias agg='sudo apt-get upgrade -y'
+alias agd='sudo apt-get dist-upgrade -y'
 alias rjiup='sudo bash /etc/RJIDocker/Update.sh'
 alias maj='agu && agg && agd && rjiup'
 
