@@ -1,3 +1,8 @@
 @reboot sudo glances -w &
-@reboot maj
-@reboot google-drive-ocamlfuse /media/Documents/GDrive/
+0 6 * * * sudo docker restart grocy maj
+0 */6 * * * sudo mount -a
+50 6 * * * sudo docker restart jellyfin
+50 6 * * * sudo docker restart seedbox
+50 6 * * * sudo docker restart transmission
+50 6 * * * sudo docker restart downboxproxy
+50 6 * * * sudo docker restart grocy
