@@ -2,36 +2,39 @@
 
 source /etc/RJIDocker/credentials.sh
 
-PortLM=80 # Lamp poer
+PortLM=80   # Lamp port
 PortHA=1000 # HomeAssistant port
 PortJF=1001 # JellyFin port
 PortFB=1002 # FileBrowser port
 PortNC=1003 # NextCloud port
 PortPO=1004 # Portainer port
-PortSB=1005 # SeedBox Port 
-PortDB=1006 # DownBox Port
-PortMQ=1007 # MQTT Port
+PortSB=1005 # SeedBox port 
+PortDB=1006 # DownBox port
+PortMQ=1007 # MQTT port
 PortGO=1011 # Grocy port
+PortOC=1012 # Octoprint port
 
-ConfigLM="/media/Runable/Docker/LM-Config/"
-ConfigHA="/media/Runable/Docker/HA-Config"
-ConfigJF="/media/Runable/Docker/JF-Config"
-ConfigFB="/media/Runable/Docker/FB-Config/"
-ConfigNC="/media/Runable/Docker/NC-Config"
-ConfigPO="/media/Runable/Docker/PO-Config"
-ConfigSB="/media/Runable/Docker/SB-Config"
-ConfigDB="/media/Runable/Docker/DB-Config"
-Config2DB="/media/Runable/Docker/DB-Config/custom"
-ConfigMQ="/media/Runable/Docker/MQ-Config/"
-ConfigGO="/media/Runable/Docker/GO-Config/"
+ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
+ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
+ConfigJF="/media/Runable/Docker/JF-Config"         # Jellyfin config folder
+ConfigFB="/media/Runable/Docker/FB-Config/"        # FileBrowser config folder
+ConfigNC="/media/Runable/Docker/NC-Config"         # NextCloud config folder
+ConfigPO="/media/Runable/Docker/PO-Config"         # Portainer config folder
+ConfigSB="/media/Runable/Docker/SB-Config"         # SeedBox config folder
+ConfigDB="/media/Runable/Docker/DB-Config"         # Downbox config folder
+Config2DB="/media/Runable/Docker/DB-Config/custom" # Downbox config folder ovpn
+ConfigMQ="/media/Runable/Docker/MQ-Config/"        # Mosquito config folder
+ConfigGO="/media/Runable/Docker/GO-Config/"        # Grocy config folder
+ConfigOC="/media/Runable/Docker/OC-Config/"        # Octoprint config folder
 
-DataLM="/media/Runable/Docker/LM-Data"
-DataJF="/media/"
-DataFB="/"
-DataNC="/media/Docs/NC-Data"
-DataSB="/media/Runable/SeedBox"
-DataDB="/media/Runable/DownBox"
-DataMQ="/media/Runable/Docker/MQ-Data"
+DataLM="/media/Runable/Docker/LM-Data"             # Lamp data folder
+DataJF="/media/"                                   # Jellyfin data folder
+DataFB="/"                                         # FileBrowser data folder
+DataNC="/media/Docs/NC-Data"                       # NextCloud data folder
+DataSB="/media/Runable/SeedBox"                    # Seedbox data folder
+DataDB="/media/Runable/DownBox"                    # DownBox data folder
+DataMQ="/media/Runable/Docker/MQ-Data"             # Mosquito data folder
+DataOC="/media/Runable/Docker/OC-Data"             # Octoprint data folder
 
 case $1 in
 	"init")
@@ -76,6 +79,9 @@ case $1 in
    			"grocy")
 				sudo docker run -d --name grocy --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
 			;;
+   			"octorint")
+				sudo docker run -d --name octorint --restart=unless-stopped -e TZ=CET -v $ConfigOC:/octoprint --device /dev/ttyACM0:/dev/ttyACM0 --device /dev/video0:/dev/video0 -e ENABLE_MJPG_STREAMER=true octoprint/octoprint:latest
+			;;
 		esac
 	;;
 	"stop")
@@ -107,6 +113,9 @@ case $1 in
 			;;
    			"grocy")
 				sudo docker stop grocy
+			;;
+   			"octoprint")
+				sudo docker stop octoprint
 			;;
 		esac
 	;;
@@ -150,6 +159,10 @@ case $1 in
 				sudo docker stop grocy
 				sudo docker rm grocy
 			;;
+      			"octoprint")
+				sudo docker stop octoprint
+				sudo docker rm octoprint
+			;;
 		esac
 	;;
 	"start")
@@ -181,6 +194,9 @@ case $1 in
 			;;
 			"grocy")
 				sudo docker start grocy
+			;;
+   			"octoprint")
+				sudo docker start octoprint
 			;;
 		esac
 	;;
@@ -224,6 +240,10 @@ case $1 in
 				sudo docker stop grocy
 				sudo docker start grocy
 			;;
+   			"octoprint")
+				sudo docker stop octoprint
+				sudo docker start octoprint
+			;;
 		esac
 	;;
 	"recover")
@@ -263,6 +283,10 @@ case $1 in
    			"grocy")
 				sudo bash /etc/RJIDocker/Docker.sh rm grocy
 				sudo bash /etc/RJIDocker/Docker.sh init grocy
+			;;
+   			"octoprint")
+				sudo bash /etc/RJIDocker/Docker.sh rm octoprint
+				sudo bash /etc/RJIDocker/Docker.sh init octoprint
 			;;
 		esac
 	;;
