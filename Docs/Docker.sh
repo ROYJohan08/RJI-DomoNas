@@ -79,7 +79,7 @@ case $1 in
    			"grocy")
 				sudo docker run -d --name grocy --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
 			;;
-   			"octorint")
+   			"octoprint")
 				sudo docker run -d --name octorint --restart=unless-stopped -e TZ=CET -v $ConfigOC:/octoprint --device /dev/ttyACM0:/dev/ttyACM0 --device /dev/video0:/dev/video0 -e ENABLE_MJPG_STREAMER=true octoprint/octoprint:latest
 			;;
 		esac
