@@ -1,4 +1,5 @@
 @reboot sudo glances -w &
+@reboot sudo iperf -s
 0 6 * * * sudo docker restart grocy maj
 0 */6 * * * sudo mount -a
 50 6 * * * sudo docker restart jellyfin
