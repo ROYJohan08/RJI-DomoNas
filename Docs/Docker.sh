@@ -87,7 +87,7 @@ case $1 in
 			;;
    			"ollama")
       				sudo docker run -d --name ollama --restart=unless-stopped -e TZ=CET -v  $ConfigOL:/root/.ollama -p 11434:11434 ollama/ollama:latest
-	  			sudo docker run -d --name ollamaui --restart=unless-stopped -e TZ=CET -v $DataOL:/app/backend/data -p $PortOL:8080
+	  			sudo docker run -d --name ollamaui --restart=unless-stopped -e TZ=CET -v $DataOL:/app/backend/data -p $PortOL:8080 ghcr.io/open-webui/open-webui:latest
       			;;
 		esac
 	;;
