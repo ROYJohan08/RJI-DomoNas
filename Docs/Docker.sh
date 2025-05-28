@@ -13,7 +13,7 @@ PortDB=1006 # DownBox port
 PortMQ=1007 # MQTT port
 PortGO=1011 # Grocy port
 PortOC=1012 # Octoprint port
-PortOC=1013 # Ollama port
+PortOL=1013 # Ollama port
 
 ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
 ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
@@ -89,6 +89,7 @@ case $1 in
    			"ollama")
       				sudo docker run -d --name ollama --restart=unless-stopped -e TZ=CET -v  $ConfigOL:/root/.ollama -p 11434:11434 ollama/ollama:latest
 	  			sudo docker run -d --name ollamaui --restart=unless-stopped -e TZ=CET -v $DataOL:/app/backend/data -p $PortOL:8080 ghcr.io/open-webui/open-webui:latest
+      				sudo docker exec ollamaui bash start.sh 
       			;;
 		esac
 	;;
