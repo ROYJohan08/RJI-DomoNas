@@ -13,6 +13,7 @@ PortDB=1006 # DownBox port
 PortMQ=1007 # MQTT port
 PortGO=1011 # Grocy port
 PortOC=1012 # Octoprint port
+PortOC=1013 # Ollama port
 
 ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
 ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
@@ -26,6 +27,7 @@ Config2DB="/media/Runable/Docker/DB-Config/custom" # Downbox config folder ovpn
 ConfigMQ="/media/Runable/Docker/MQ-Config/"        # Mosquito config folder
 ConfigGO="/media/Runable/Docker/GO-Config/"        # Grocy config folder
 ConfigOC="/media/Runable/Docker/OC-Config/"        # Octoprint config folder
+ConfigOL="/media/Runable/Docker/OL-Config/"        # Ollama config folder
 
 DataLM="/media/Runable/Docker/LM-Data"             # Lamp data folder
 DataJF="/media/"                                   # Jellyfin data folder
@@ -83,6 +85,10 @@ case $1 in
 				sudo docker run -d --name octoprint --restart=unless-stopped -e TZ=CET -v $ConfigOC:/octoprint -p $PortOC:80 -e ENABLE_MJPG_STREAMER=true octoprint/octoprint:latest
     				#sudo docker run -d --name octoprint --restart=unless-stopped -e TZ=CET -v $ConfigOC:/octoprint -p $PortOC:80 --device /dev/ttyACM0:/dev/ttyACM0 --device /dev/video0:/dev/video0 -e ENABLE_MJPG_STREAMER=true octoprint/octoprint:latest
 			;;
+   			"ollama")
+      				sudo docker run -d --name ollama --restart=unless-stopped -e TZ=CET -v  $ConfigOL:/root/.ollama -p 11434:11434 ollama/ollama:latest
+	  			sudo docker run -d --name ollamaui --restart=unless-stopped -e TZ=CET -v $DataOL:/app/backend/data -p $PortOL:8080
+      			;;
 		esac
 	;;
 	"stop")
@@ -117,6 +123,10 @@ case $1 in
 			;;
    			"octoprint")
 				sudo docker stop octoprint
+			;;
+		   	"ollama")
+				sudo docker stop ollama
+    				sudo docker stop ollamaui
 			;;
 		esac
 	;;
