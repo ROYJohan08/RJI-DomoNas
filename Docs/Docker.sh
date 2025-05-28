@@ -37,6 +37,7 @@ DataSB="/media/Runable/SeedBox"                    # Seedbox data folder
 DataDB="/media/Runable/DownBox"                    # DownBox data folder
 DataMQ="/media/Runable/Docker/MQ-Data"             # Mosquito data folder
 DataOC="/media/Runable/Docker/OC-Data"             # Octoprint data folder
+DataOL="/media/Runable/Docker/OL-Data"             # Ollama data folder
 
 case $1 in
 	"init")
