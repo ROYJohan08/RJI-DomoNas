@@ -5,39 +5,30 @@ source /etc/RJIDocker/credentials.sh
 PortLM=80   # Lamp port
 PortHA=1000 # HomeAssistant port
 PortJF=1001 # JellyFin port
-PortFB=1002 # FileBrowser port
-PortNC=1003 # NextCloud port
-PortPO=1004 # Portainer port
-PortSB=1005 # SeedBox port 
-PortDB=1006 # DownBox port
+PortDB=1002 # DownBox port
+PortSB=1003 # SeedBox port 
+PortGO=1004 # Grocy port
+PortPO=1005 # Portainer port
+PortFB=1006 # FileBrowser port
 PortMQ=1007 # MQTT port
-PortGO=1011 # Grocy port
-PortOC=1012 # Octoprint port
-PortOL=1013 # Ollama port
 
 ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
 ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
 ConfigJF="/media/Runable/Docker/JF-Config"         # Jellyfin config folder
 ConfigFB="/media/Runable/Docker/FB-Config/"        # FileBrowser config folder
-ConfigNC="/media/Runable/Docker/NC-Config"         # NextCloud config folder
 ConfigPO="/media/Runable/Docker/PO-Config"         # Portainer config folder
 ConfigSB="/media/Runable/Docker/SB-Config"         # SeedBox config folder
 ConfigDB="/media/Runable/Docker/DB-Config"         # Downbox config folder
 Config2DB="/media/Runable/Docker/DB-Config/custom" # Downbox config folder ovpn
 ConfigMQ="/media/Runable/Docker/MQ-Config/"        # Mosquito config folder
 ConfigGO="/media/Runable/Docker/GO-Config/"        # Grocy config folder
-ConfigOC="/media/Runable/Docker/OC-Config/"        # Octoprint config folder
-ConfigOL="/media/Runable/Docker/OL-Config/"        # Ollama config folder
 
 DataLM="/media/Runable/Docker/LM-Data"             # Lamp data folder
 DataJF="/media/"                                   # Jellyfin data folder
 DataFB="/"                                         # FileBrowser data folder
-DataNC="/media/Docs/NC-Data"                       # NextCloud data folder
 DataSB="/media/Runable/SeedBox"                    # Seedbox data folder
 DataDB="/media/Runable/DownBox"                    # DownBox data folder
 DataMQ="/media/Runable/Docker/MQ-Data"             # Mosquito data folder
-DataOC="/media/Runable/Docker/OC-Data"             # Octoprint data folder
-DataOL="/media/Runable/Docker/OL-Data"             # Ollama data folder.
 
 case $1 in
 	"init")
@@ -53,9 +44,6 @@ case $1 in
 			;;
 			"filebrowser")
 				sudo docker run -d --name filebrowser --privileged --restart=unless-stopped -e TZ=CET -v $DataFB:/srv -v $ConfigFB:/config/ -p $PortFB:80 filebrowser/filebrowser:v1.10.0
-			;;
-			"nextcloud")
-				sudo docker run -d --name nextcloud --restart=unless-stopped -e TZ=CET -p $PortNC:80 -v $ConfigNC:/var/www/html/config -v $DataNC:/data nextcloud:18.0.4
 			;;
 			"portainer")
 				sudo docker run -d --name portainer --privileged --restart=unless-stopped -e TZ=CET -p 8000:8000 -p 9443:9443 -p $PortPO:9000 -v /var/run/docker.sock:/var/run/docker.sock -v $ConfigSB:/data portainer/portainer-ce:latest
@@ -82,15 +70,6 @@ case $1 in
    			"grocy")
 				sudo docker run -d --name grocy --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
 			;;
-   			"octoprint")
-				sudo docker run -d --name octoprint --restart=unless-stopped -e TZ=CET -v $ConfigOC:/octoprint -p $PortOC:80 -e ENABLE_MJPG_STREAMER=true octoprint/octoprint:latest
-    				#sudo docker run -d --name octoprint --restart=unless-stopped -e TZ=CET -v $ConfigOC:/octoprint -p $PortOC:80 --device /dev/ttyACM0:/dev/ttyACM0 --device /dev/video0:/dev/video0 -e ENABLE_MJPG_STREAMER=true octoprint/octoprint:latest
-			;;
-   			"ollama")
-      				sudo docker run -d --name ollama --restart=unless-stopped -e TZ=CET -v  $ConfigOL:/root/.ollama -p 11434:11434 ollama/ollama:latest
-	  			sudo docker run -d --name ollamaui --restart=unless-stopped -e TZ=CET -v $DataOL:/app/backend/data -p $PortOL:8080 ghcr.io/open-webui/open-webui:latest
-      				sudo docker exec ollamaui bash start.sh 
-      			;;
 		esac
 	;;
 	"stop")
@@ -108,9 +87,6 @@ case $1 in
 			"jellyfin")
 				sudo docker stop jellyfin
 			;;
-			"nextcloud")
-				sudo docker stop nextcloud
-			;;
 			"lamp")
 				sudo docker stop lamp
 			;;
@@ -122,13 +98,6 @@ case $1 in
 			;;
    			"grocy")
 				sudo docker stop grocy
-			;;
-   			"octoprint")
-				sudo docker stop octoprint
-			;;
-		   	"ollama")
-				sudo docker stop ollama
-    				sudo docker stop ollamaui
 			;;
 		esac
 	;;
@@ -152,10 +121,6 @@ case $1 in
 				sudo docker stop jellyfin
 				sudo docker rm jellyfin
 			;;
-			"nextcloud")
-				sudo docker stop nextcloud
-				sudo docker rm nextcloud
-			;;
 			"lamp")
 				sudo docker stop lamp
 				sudo docker rm lamp
@@ -171,10 +136,6 @@ case $1 in
    			"grocy")
 				sudo docker stop grocy
 				sudo docker rm grocy
-			;;
-      			"octoprint")
-				sudo docker stop octoprint
-				sudo docker rm octoprint
 			;;
 		esac
 	;;
@@ -193,9 +154,6 @@ case $1 in
 			"jellyfin")
 				sudo docker start jellyfin
 			;;
-			"nextcloud")
-				sudo docker start nextcloud
-			;;
 			"lamp")
 				sudo docker start lamp
 			;;
@@ -207,9 +165,6 @@ case $1 in
 			;;
 			"grocy")
 				sudo docker start grocy
-			;;
-   			"octoprint")
-				sudo docker start octoprint
 			;;
 		esac
 	;;
@@ -233,10 +188,6 @@ case $1 in
 				sudo docker stop jellyfin
 				sudo docker start jellyfin
 			;;
-			"nextcloud")
-				sudo docker stop nextcloud
-				sudo docker start nextcloud
-			;;
 			"lamp")
 				sudo docker stop lamp
 				sudo docker start lamp
@@ -253,53 +204,41 @@ case $1 in
 				sudo docker stop grocy
 				sudo docker start grocy
 			;;
-   			"octoprint")
-				sudo docker stop octoprint
-				sudo docker start octoprint
-			;;
 		esac
 	;;
 	"recover")
 		case $2 in
 			"homeassistant")
-				sudo bash /etc/RJIDocker/Docker.sh rm homeassistant
-				sudo bash /etc/RJIDocker/Docker.sh init homeassistant
+				sudo bash /etc/RJIDomoNas/Docker.sh rm homeassistant
+				sudo bash /etc/RJIDomoNas/Docker.sh init homeassistant
 			;;
 			"seedbox")
-				sudo bash /etc/RJIDocker/Docker.sh rm seedbox
-				sudo bash /etc/RJIDocker/Docker.sh init seedbox
+				sudo bash /etc/RJIDomoNas/Docker.sh rm seedbox
+				sudo bash /etc/RJIDomoNas/Docker.sh init seedbox
 			;;
 			"downbox")
-				sudo bash /etc/RJIDocker/Docker.sh rm downbox
-				sudo bash /etc/RJIDocker/Docker.sh init downbox
+				sudo bash /etc/RJIDomoNas/Docker.sh rm downbox
+				sudo bash /etc/RJIDomoNas/Docker.sh init downbox
 			;;
 			"jellyfin")
-				sudo bash /etc/RJIDocker/Docker.sh rm jellyfin
-				sudo bash /etc/RJIDocker/Docker.sh init jellyfin
-			;;
-			"nextcloud")
-				sudo bash /etc/RJIDocker/Docker.sh rm nextcloud
-				sudo bash /etc/RJIDocker/Docker.sh init nextcloud
+				sudo bash /etc/RJIDomoNas/Docker.sh rm jellyfin
+				sudo bash /etc/RJIDomoNas/Docker.sh init jellyfin
 			;;
 			"lamp")
-				sudo bash /etc/RJIDocker/Docker.sh rm lamp
-				sudo bash /etc/RJIDocker/Docker.sh init lamp
+				sudo bash /etc/RJIDomoNas/Docker.sh rm lamp
+				sudo bash /etc/RJIDomoNas/Docker.sh init lamp
 			;;
 			"filebrowser")
-				sudo bash /etc/RJIDocker/Docker.sh rm filebrowser
-				sudo bash /etc/RJIDocker/Docker.sh init filebrowser
+				sudo bash /etc/RJIDomoNas/Docker.sh rm filebrowser
+				sudo bash /etc/RJIDomoNas/Docker.sh init filebrowser
 			;;
 			"mqtt")
-				sudo bash /etc/RJIDocker/Docker.sh rm mqtt
-				sudo bash /etc/RJIDocker/Docker.sh init mqtt
+				sudo bash /etc/RJIDomoNas/Docker.sh rm mqtt
+				sudo bash /etc/RJIDomoNas/Docker.sh init mqtt
 			;;
    			"grocy")
-				sudo bash /etc/RJIDocker/Docker.sh rm grocy
-				sudo bash /etc/RJIDocker/Docker.sh init grocy
-			;;
-   			"octoprint")
-				sudo bash /etc/RJIDocker/Docker.sh rm octoprint
-				sudo bash /etc/RJIDocker/Docker.sh init octoprint
+				sudo bash /etc/RJIDomoNas/Docker.sh rm grocy
+				sudo bash /etc/RJIDomoNas/Docker.sh init grocy
 			;;
 		esac
 	;;
