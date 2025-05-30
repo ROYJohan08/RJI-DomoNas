@@ -31,8 +31,8 @@ mv /etc/RJIDomoNas/InstallDrives.sh /etc/RJIDomoNas/Old/InstallDrives.sh # Save 
 wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/InstallDrives.sh #Get new Update
 mv InstallDrives.sh /etc/RJIDomoNas/InstallDrives.sh
 
-rm -rf /etc/RJIDomonas/Old/mycron
-mv /etc/RJIDomonas/mycron /etc/RJIDomonas/Old/mycron
+rm -rf /etc/RJIDomoNas/Old/mycron
+mv /etc/RJIDomoNas/mycron /etc/RJIDomoNas/Old/mycron
 wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/mycron # Get Crontab
-mv mycron /etc/RJIDomonas/mycron
-sudo crontab /etc/RJIDomonas/mycron # Set Crontab into crontab
+mv mycron /etc/RJIDomoNas/mycron
+sudo crontab /etc/RJIDomoNas/mycron # Set Crontab into crontab
