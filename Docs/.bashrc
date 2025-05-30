@@ -95,9 +95,9 @@ alias l='ls -CF'
 alias sudo='sudo '
 alias samba='service smbd'
 
-alias cdvm='cd /etc/RJIDocker/'
-alias nanovm='nano /etc/RJIDocker/Docker.sh'
-alias bashvm='bash /etc/RJIDocker/Docker.sh'
+alias domonas='cd /etc/RJIDomoNas/'
+alias nanovm='nano /etc/RJIDomoNas/Docker.sh'
+alias bashvm='bash /etc/RJIDomoNas/Docker.sh'
 alias lsvm='docker ps'
 alias cdseries1='cd /media/Series01'
 alias cdseries2='cd /media/Series02'
@@ -107,16 +107,16 @@ alias cdfilms2='cd /media/Films02'
 alias cddownbox='cd /media/Runable/DownBox/completed/'
 alias cdseedbox='cd /media/Runable/SeedBox/'
 alias cddocs='cd /media/Docs01/'
+alias runable='cd /media/Runable'
 
 alias glances='glances -w &'
 
 alias agu='sudo apt-get update -y'
 alias agg='sudo apt-get upgrade -y'
 alias agd='sudo apt-get dist-upgrade -y'
-alias rjiup='sudo bash /etc/RJIDocker/Update.sh'
-alias maj='agu && agg && agd && rjiup'
-
-alias runable='cd /media/Runable'
+alias upup= sudo wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Update.sh && rm /etc/RJIDomoNas/Old/Update.sh && mv /etc/RJIDomoNas/Update.sh /etc/RJIDomoNas/Old/Update.sh && mv Update.sh /etc/RJIDomoNas/Update.sh
+alias rjiup='sudo bash /etc/RJIDomoNas/Update.sh'
+alias maj='agu && agg && agd && upup && rjiup'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
