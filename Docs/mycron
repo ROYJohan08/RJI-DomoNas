@@ -1,6 +1,8 @@
 @reboot sudo glances -w &
 @reboot sudo iperf -s
-0 6 * * * sudo docker restart grocy maj
+@reboot sudo mount -a
+@reboot sudo upup
+@reboot sudo rjiup
 0 */6 * * * sudo mount -a
 50 6 * * * sudo docker restart jellyfin
 50 6 * * * sudo docker restart seedbox
