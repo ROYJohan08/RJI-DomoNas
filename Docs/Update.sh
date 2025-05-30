@@ -21,8 +21,8 @@ rm -rf /root/.bashrc.old # Remove Oldest BashRC
 cp /home/royjohan/.bashrc /home/royjohan/.bashrc.old # Save old bashRc
 cp /root/.bashrc /root/.bashrc.old # Save old bashRc
 wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/.bashrc # Get new bashrc
-mv -rf .bashrc /home/royjohan/.bashrc
-cp -rf /home/royjohan/.bashrc /root/.bashrc
+yes | cp -rf .bashrc /home/royjohan/.bashrc
+yes | cp -rf /home/royjohan/.bashrc /root/.bashrc
 source /root/.bashrc # Restart alias.
 source /home/royjohan/.bashrc # Restart alias.
 
