@@ -11,9 +11,10 @@ mv smb.conf /etc/samba/smb.conf
 service smbd start # Restart samba
 
 
-rm -rf /etc/RJIDocker/old/Docker.sh.old # Remove oldest launcher
-mv /etc/RJIDocker/Docker.sh /etc/RJIDocker/old/Docker.sh.old # Save old config.
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh -P /etc/RJIDocker/ # Get Docker launcher
+rm -rf /etc/RJIDomoNas/Old/Docker.sh # Remove oldest launcher
+mv /etc/RJIDomoNas/Docker.sh /etc/RJIDomoNas/Old/Docker.sh # Save old config.
+wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
+mv Docker.sh /etc/RJIDomoNas/Docker.sh
 
 rm -rf /etc/RJIDocker/old/.bashrc.old # Remove Oldest BashRC
 cp ~/.bashrc /etc/RJIDocker/old/.bashrc.old # Save old bashRc
