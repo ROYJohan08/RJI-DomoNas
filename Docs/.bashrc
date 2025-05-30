@@ -114,7 +114,7 @@ alias glances='glances -w &'
 alias agu='sudo apt-get update -y'
 alias agg='sudo apt-get upgrade -y'
 alias agd='sudo apt-get dist-upgrade -y'
-alias upup= sudo wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Update.sh && rm /etc/RJIDomoNas/Old/Update.sh && mv /etc/RJIDomoNas/Update.sh /etc/RJIDomoNas/Old/Update.sh && mv Update.sh /etc/RJIDomoNas/Update.sh
+alias upup='sudo bash /etc/RJIDomoNas/Upup.sh'
 alias rjiup='sudo bash /etc/RJIDomoNas/Update.sh'
 alias maj='agu && agg && agd && upup && rjiup'
 
