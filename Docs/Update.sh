@@ -6,32 +6,33 @@ mkdir /etc/RJIDomoNas/Old # Create launcher folder
 service smbd stop # Restart samba
 rm -rf /etc/samba/smb.conf.old # Remove oldest config
 mv /etc/samba/smb.conf /etc/samba/smb.conf.old # Save old config
-wget https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf # Get samba config.
+wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/smb.conf # Get samba config.
 mv smb.conf /etc/samba/smb.conf
 service smbd start # Restart samba
 
 
 rm -rf /etc/RJIDomoNas/Old/Docker.sh # Remove oldest launcher
 mv /etc/RJIDomoNas/Docker.sh /etc/RJIDomoNas/Old/Docker.sh # Save old config.
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
+wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Docker.sh
 mv Docker.sh /etc/RJIDomoNas/Docker.sh
 
-rm -rf /etc/RJIDocker/old/.bashrc.old # Remove Oldest BashRC
-cp ~/.bashrc /etc/RJIDocker/old/.bashrc.old # Save old bashRc
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc -P /etc/RJIDocker/ -O .bashrc.new > /dev/null # Get new bashrc
-cp -rf /etc/RJIDocker/.bashrc.new ~/.bashrc
-cp -rf /etc/RJIDocker/.bashrc.new /home/royjohan/.bashrc
-source ~/.bashrc # Restart alias.
+rm -rf /home/royjohan/.bashrc.old # Remove Oldest BashRC
+rm -rf /root/.bashrc.old # Remove Oldest BashRC
+cp /home/royjohan/.bashrc /home/royjohan/.bashrc.old # Save old bashRc
+cp /root/.bashrc /root/.bashrc.old # Save old bashRc
+wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/.bashrc # Get new bashrc
+mv -rf .bashrc /home/royjohan/.bashrc
+cp -rf /home/royjohan/.bashrc /root/.bashrc
+source /root/.bashrc # Restart alias.
 source /home/royjohan/.bashrc # Restart alias.
 
-rm -rf /etc/RJIDocker/old/InstallDrives.sh.old # Remove Oldest Update
-mv /etc/RJIDocker/InstallDrives.sh /etc/RJIDocker/old/InstallDrives.sh.old # Save old Update
-wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh -P /etc/RJIDocker/ > /dev/null #Get new Update
+rm -rf /etc/RJIDomoNas/Old/InstallDrives.sh # Remove Oldest Update
+mv /etc/RJIDomoNas/InstallDrives.sh /etc/RJIDomoNas/Old/InstallDrives.sh # Save old Update
+wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/InstallDrives.sh #Get new Update
+mv InstallDrives.sh /etc/RJIDomoNas/InstallDrives.sh
 
-wget https://github.com/ROYJohan08/RJI-DomoNas/raw/main/Docs/mycron -P ~/ # Get Crontab
-sudo crontab ~/mycron # Set Crontab into crontab
-rm ~/mycron # Remove temp crontab
-
-rm -rf /etc/RJIDocker/old/TvShowStorage.py.old # Remove Oldest Update
-mv /etc/RJIDocker/TvShowStorage.py /etc/RJIDocker/old/TvShowStorage.py.old # Save old Update
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/TvShowStorage.py -P /etc/RJIDocker/  > /dev/null
+rm -rf /etc/RJIDomonas/Old/mycron
+mv /etc/RJIDomonas/mycron /etc/RJIDomonas/Old/mycron
+wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/mycron # Get Crontab
+mv mycron /etc/RJIDomonas/mycron
+sudo crontab /etc/RJIDomonas/mycron # Set Crontab into crontab
