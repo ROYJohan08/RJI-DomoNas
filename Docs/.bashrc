@@ -109,6 +109,7 @@ alias cdseedbox='cd /media/Runable/SeedBox/'
 alias cddocs='cd /media/Docs01/'
 alias runable='cd /media/Runable'
 
+alias ldisk='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID'
 alias glances='glances -w &'
 
 alias agu='sudo apt-get update -y'
@@ -117,6 +118,7 @@ alias agd='sudo apt-get dist-upgrade -y'
 alias upup='sudo bash /etc/RJIDomoNas/Upup.sh'
 alias rjiup='sudo bash /etc/RJIDomoNas/Update.sh'
 alias maj='agu && agg && agd && upup && rjiup'
+
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
