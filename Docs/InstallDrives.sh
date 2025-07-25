@@ -16,5 +16,6 @@ echo "/dev/disk/by-uuid/23BF5EEE4C02F6EE /media/Films01 auto noatime 0 1" >> /et
 echo "/dev/disk/by-uuid/E8D250EAD250BF0E /media/Films02 auto noatime 0 1" >> /etc/fstab
 echo "/dev/disk/by-uuid/2FB75EE05993C324 /media/Docs01 auto noatime 0 1" >> /etc/fstab
 echo "/dev/disk/by-uuid/F6809B44809B09EF /media/Runable auto noatime 0 1" >> /etc/fstab
+echo "/dev/disk/by-uuid/F4D8EDECD8EDAD54 /media/Archive auto noatime 0 1" >> /etc/fstab
 
-sudo mount -a
+sudo mount -a --onlyonce
