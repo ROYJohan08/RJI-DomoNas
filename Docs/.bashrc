@@ -110,6 +110,7 @@ alias cddocs='cd /media/Docs01/'
 alias runable='cd /media/Runable'
 
 alias ldisk='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID'
+alias mdisk='mount -a --onlyonce'
 alias glances='glances -w &'
 
 alias agu='sudo apt-get update -y'
