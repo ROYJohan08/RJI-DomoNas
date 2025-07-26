@@ -3,9 +3,10 @@
 @reboot sudo mount -a
 @reboot sudo upup
 @reboot sudo rjiup
-0 */6 * * * sudo mount -a
+@hourly sudo mount -a --onlyonce
 50 6 * * * sudo docker restart jellyfin
 50 6 * * * sudo docker restart seedbox
 50 6 * * * sudo docker restart transmission
 50 6 * * * sudo docker restart downboxproxy
 50 6 * * * sudo docker restart grocy
+50 6 * * * sudo /etc/RJIDomoNas/Archive.sh &
