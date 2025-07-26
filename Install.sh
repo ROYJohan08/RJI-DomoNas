@@ -98,5 +98,9 @@ else
     echo "no move" # Nth
 fi
 
+#Install Archivage.
+wget "https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Archive.sh"
+mv Archive.sh /etc/RJIDomoNas/Archive.sh
+
 source /etc/RJIDomoNas/credentials.sh # Import credentials
 echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User # Create new smbuser
