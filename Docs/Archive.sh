@@ -29,7 +29,7 @@ then
             echo "Check if Archive/Runable/Docker exist : OK"
             echo "Copping files..."
             cp -a -d -f -R -u -v /media/Runable/Docker/* /media/Archive/Runable/Docker/
-            echo "Copping files... OK
+            echo "Copping files... OK"
         else
             echo "Check if Archive/Runable/Docker exist : KO"
             echo "Exit"
