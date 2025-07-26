@@ -36,3 +36,9 @@ mv /etc/RJIDomoNas/mycron /etc/RJIDomoNas/Old/mycron
 wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/mycron # Get Crontab
 mv mycron /etc/RJIDomoNas/mycron
 sudo crontab /etc/RJIDomoNas/mycron # Set Crontab into crontab
+
+rm -rf /etc/RJIDomoNas/Old/Archive.sh
+mv /etc/RJIDomoNas/Archive.sh /etc/RJIDomoNas/Old/Archive.sh
+wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Archive.sh # Get Crontab
+mv Archive.sh /etc/RJIDomoNas/Archive.sh
+
