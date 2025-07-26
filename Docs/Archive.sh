@@ -71,7 +71,7 @@ then
 	cp -a -d -f -R -u -v /media/Series03/A-*/ /media/Archive/Series/ &
 	cp -a -d -f -R -u -v /media/Films01/A-* /media/Archive/Films/ &
 	cp -a -d -f -R -u -v /media/Films01/*/A-* /media/Archive/Films/ &
-	cp -a -d -f -R -u -v /media/Docs01/ /media/Archive/Docs/ &
+	cp -a -d -f -R -u -v /media/Docs01/* /media/Archive/Docs/ &
 	
 else
     echo "Check if Archive is mounted : KO"
