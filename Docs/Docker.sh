@@ -11,7 +11,7 @@ PortGO=1004 # Grocy port
 PortPO=1005 # Portainer port
 PortFB=1006 # FileBrowser port
 PortMQ=1007 # MQTT port
-PortCO=1006
+PortWT=1008 # WebTop port
 
 ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
 ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
@@ -23,7 +23,7 @@ ConfigDB="/media/Runable/Docker/DB-Config"         # Downbox config folder
 Config2DB="/media/Runable/Docker/DB-Config/custom" # Downbox config folder ovpn
 ConfigMQ="/media/Runable/Docker/MQ-Config/"        # Mosquito config folder
 ConfigGO="/media/Runable/Docker/GO-Config/"        # Grocy config folder
-ConfigCO="/media/Runable/Docker/CO-Config/"        # Cockpit config folder
+ConfigWT="/media/Runable/Docker/WT-Config/"        # WebTop config folder
 
 DataLM="/media/Runable/Docker/LM-Data"             # Lamp data folder
 DataJF="/media/"                                   # Jellyfin data folder
@@ -31,7 +31,6 @@ DataFB="/"                                         # FileBrowser data folder
 DataSB="/media/Runable/SeedBox"                    # Seedbox data folder
 DataDB="/media/Runable/DownBox"                    # DownBox data folder
 DataMQ="/media/Runable/Docker/MQ-Data"             # Mosquito data folder
-DataCO="/media/Runable/Docker/CO-Data"             # Cockit data folder
 
 case $1 in
 	"init")
@@ -73,8 +72,8 @@ case $1 in
    			"grocy")
 				sudo docker run -d --name grocy --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
 			;;
-   			"cockpit")
-				sudo docker run -d --name cockpit --restart=unless-stopped -e TZ=CET -v $ConfigCO:/config -v $DataCO:/storage  -p $PortCO:80  cockpithq/cockpit:pro-latest
+   			"webtop")
+    				sudo docker run -d --name webtop  --restart=unless-stopped -e TZ=CET -v $ConfigWT:/config -p $PortWT:3000 lscr.io/linuxserver/webtop:latest
 			;;
 		esac
 	;;
