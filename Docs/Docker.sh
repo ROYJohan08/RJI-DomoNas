@@ -55,7 +55,7 @@ case $1 in
 				sudo mkdir $sbConfig/GUI/
 				sudo mv transmission-web-control/src/ $sbConfig/GUI/
 				sudo rm -rf transmission-web-control/
-				sudo docker run -d --name seedbox --privileged --restart=unless-stopped -e TZ=CET -e USER=$User -e PASS=$Pass -p $PortSB:9091 -p 51413:51413 -p 51413:51413/udp -v $ConfigSB:/config -v $DataSB:/downloads/complete lscr.io/linuxserver/transmission:latest
+				sudo docker run -d --name seedbox --privileged --restart=unless-stopped -e TZ=CET -e USER=$User -e PASS=$Pass -e TRANSMISSION_WEB_HOME=/config/GUI/ -p $PortSB:9091 -p 51413:51413 -p 51413:51413/udp -v $ConfigSB:/config -v $DataSB:/downloads/complete lscr.io/linuxserver/transmission:latest
 				sudo docker exec seedbox cp -r /usr/share/transmission/public_html/index.html /usr/share/transmission/public_html/index.html.old
 				sudo docker exec seedbox cp -r /config/GUI/src/index.html /usr/share/transmission/public_html/
 				sudo docker exec seedbox cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
