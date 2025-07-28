@@ -112,6 +112,7 @@ alias runable='cd /media/Runable'
 alias ldisk='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID'
 alias mdisk='mount -a --onlyonce'
 alias glances='glances -w &'
+alias archive='cp -a -d -f -R -u -v '
 
 alias agu='sudo apt-get update -y'
 alias agg='sudo apt-get upgrade -y'
