@@ -12,7 +12,7 @@ apt-get full-upgrade -y
 ##################################################
 
 mkdir /etc/RJIDomoNas/
-mkdir /etc/RJIDomoNas/old/
+mkdir /etc/RJIDomoNas/Old/
 
 ##################################################
 #                Install docker                  #
