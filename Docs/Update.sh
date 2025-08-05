@@ -79,7 +79,7 @@ mv -f /etc/RJIDomoNas/Renamer.sh /etc/RJIDomoNas/Old/Renamer.sh
 wget --output-document /etc/RJIDomoNas/Renamer.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Renamer.sh
 
 ##################################################
-#    @Date : 05/08/2025 12:57                    #
+#    @Date : 05/08/2025 14:02                    #
 #    @Author : @ROYJohan                         #
 #    @Version : 10b                              #
 ##################################################
