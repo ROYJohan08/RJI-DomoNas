@@ -1,21 +1,21 @@
 #!/bin/bash
 
 ##################################################
-#				Installing upgrade				 #
+#              Installing upgrade                #
 ##################################################
 
 apt-get update -y
 apt-get full-upgrade -y
 
 ##################################################
-#			Create work folders					 #
+#              Create work folders               #
 ##################################################
 
 mkdir /etc/RJIDomoNas/
 mkdir /etc/RJIDomoNas/old/
 
 ##################################################
-#				Install docker				 	 #
+#                Install docker                  #
 ##################################################
 
 apt-get install ca-certificates curl gnupg -y
@@ -29,7 +29,7 @@ apt-get full-upgrade -y
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 ##################################################
-#			Install net tools					 #
+#                 Install net tools              #
 ##################################################
 
 
@@ -38,13 +38,13 @@ apt-get install iperf -y
 ubuntu-drivers list --gpgpu
 
 ##################################################
-#				Install disk tools				 #
+#              Install disk tools                #
 ##################################################
 
 sudo apt-get install smartmontools -y
 
 ##################################################
-#				Install Samba					 #
+#                    Install Samba               #
 ##################################################
 
 apt-get install samba -y
@@ -56,7 +56,7 @@ mv -f ./smb.conf /etc/samba/smb.conf
 service smbd start
 
 ##################################################
-#				 Install Glances				 #
+#                   Install Glances              #
 ##################################################
 
 apt-get install glances -y
@@ -68,16 +68,17 @@ mv -f ./glances.service /etc/systemd/system/glances.service
 sudo systemctl enable glances.service
 
 ##################################################
-#			 Install InstallDrives.sh			 #
+#            Install InstallDrives.sh            #
 ##################################################
 
 rm -rf /etc/RJIDomoNas/Old/InstallDrives.sh
 mv -f /etc/RJIDomoNas/InstallDrives.sh /etc/RJIDomoNas/Old/InstallDrives.sh
 wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh
 mv -f ./InstallDrives.sh /etc/RJIDomoNas/InstallDrives.sh
+bash /etc/RJIDomoNas/InstallDrives.sh &
 
 ##################################################
-#	 			Install Docker.sh				 #
+#                Install Docker.sh               #
 ##################################################
 
 rm -rf /etc/RJIDomoNas/Old/Docker.sh
@@ -86,7 +87,7 @@ wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
 mv -f ./Docker.sh /etc/RJIDomoNas/Docker.sh
 
 ##################################################
-#	 			Install .bashrc					 #
+#                Install .bashrc                 #
 ##################################################
 
 rm -rf /home/royjohan/.bashrc.*
@@ -98,7 +99,7 @@ mv -f ./.bashrc /home/royjohan/.bashrc
 cp -f /home/royjohan/.bashrc /root/.bashrc
 
 ##################################################
-#	 			Install Update.sh				 #
+#              Install Update.sh                 #
 ##################################################
 
 rm -rf /etc/RJIDomoNas/Old/Update.sh
@@ -107,7 +108,7 @@ wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh
 mv -f ./Update.sh /etc/RJIDomoNas/Update.sh
 
 ##################################################
-#				Install crontab					 #
+#                Install crontab                 #
 ##################################################
 
 apt-get install cron -y
@@ -118,7 +119,7 @@ mv -f ./mycron /etc/RJIDomoNas/mycron
 sudo crontab /etc/RJIDomoNas/mycron
 
 ##################################################
-#				Install nohibernate				 #
+#                Install nohibernate             #
 ##################################################
 
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
@@ -132,7 +133,7 @@ echo 'sleep-inactive-ac-type="blank"' >> /etc/gdm3/greeter.dconf-defaults
 sudo systemctl restart gdm3
 
 ##################################################
-#				Install python 					 #
+#                Install python                  #
 ##################################################
 
 rm -rf /etc/RJIDomoNas/Old/get-pip.py
@@ -142,7 +143,7 @@ mv -f ./get-pip.py /etc/RJIDomoNas/get-pip.py
 sudo python3 /etc/RJIDomoNas/get-pip.py
 
 ##################################################
-#				Set credential datas			 #
+#               Set credential dataS             #
 ##################################################
 
 FILE=/etc/RJIDomoNas/credentials.sh
@@ -161,7 +162,7 @@ else
 fi
 
 ##################################################
-#				Install Archive.sh				 #
+#               Install Archive.sh               #
 ##################################################
 
 rm -rf /etc/RJIDomoNas/Old/Archive.sh
@@ -170,11 +171,13 @@ wget -r "https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/mai
 mv -f ./Archive.sh /etc/RJIDomoNas/Archive.sh
 
 ##################################################
-#				Create smb User					 #
+#                Create smb User                 #
 ##################################################
 
 source /etc/RJIDomoNas/credentials.sh # Import credentials
 echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User # Create new smbuser
+
+
 
 ##################################################
 #    @Date : 05/08/2025 12:02                    #
