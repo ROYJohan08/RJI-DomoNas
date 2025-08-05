@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+#Systeme upgrade
 apt-get update -y # Update software.
 apt-get full-upgrade -y # Update firmware.
 
@@ -22,6 +24,9 @@ apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docke
 apt-get install net-tools -y # Install network tools.
 apt-get install iperf -y #Install Ierf for local speedtest.
 ubuntu-drivers list --gpgpu
+
+#Install disk tools
+sudo apt-get install smartmontools -y
 
 #Install Samba
 apt-get install samba -y #Install samba.
@@ -75,6 +80,17 @@ mv /etc/RJIDomoNas/mycron /etc/RJIDomoNas/Old/mycron #Save old configuration
 wget https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/mycron # Get Crontab
 mv mycron /etc/RJIDomoNas/mycron #Move mycron to correct folder
 sudo crontab /etc/RJIDomoNas/mycron # Set Crontab into crontab
+
+#Install nohibernate
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+touch /etc/systemd/sleep.conf.d/nosuspend.conf
+echo "[Sleep]" >> /etc/systemd/sleep.conf.d/nosuspend.conf
+echo "AllowSuspend=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
+echo "AllowHibernation=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
+echo "AllowSuspendThenHibernate=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
+echo "AllowHybridSleep=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
+echo 'sleep-inactive-ac-type="blank"' >> /etc/gdm3/greeter.dconf-defaults
+sudo systemctl restart gdm3
 
 #Install python correct way
 rm -rf /etc/RJIDomoNas/Old/get-pip.py
