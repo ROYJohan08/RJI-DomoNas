@@ -1,186 +1,82 @@
-#!/bin/bash
+#!bin/sh
+
+source /etc/RJIDocker/credentials.sh
+
+PortLM=80   # Lamp port
+PortHA=1000 # HomeAssistant port
+PortJF=1001 # JellyFin port
+PortDB=1002 # DownBox port
+PortSB=1003 # SeedBox port 
+PortGO=1004 # Grocy port
+PortPO=1005 # Portainer port
+PortFB=1006 # FileBrowser port
+PortMQ=1007 # MQTT port
+
+ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
+ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
+ConfigJF="/media/Runable/Docker/JF-Config"         # Jellyfin config folder
+ConfigFB="/media/Runable/Docker/FB-Config/"        # FileBrowser config folder
+ConfigPO="/media/Runable/Docker/PO-Config"         # Portainer config folder
+ConfigSB="/media/Runable/Docker/SB-Config"         # SeedBox config folder
+ConfigDB="/media/Runable/Docker/DB-Config"         # Downbox config folder
+Config2DB="/media/Runable/Docker/DB-Config/custom" # Downbox config folder ovpn
+ConfigMQ="/media/Runable/Docker/MQ-Config/"        # Mosquito config folder
+ConfigGO="/media/Runable/Docker/GO-Config/"        # Grocy config folder
+
+DataLM="/media/Runable/Docker/LM-Data"             # Lamp data folder
+DataJF="/media/"                                   # Jellyfin data folder
+DataFB="/"                                         # FileBrowser data folder
+DataSB="/media/Runable/SeedBox"                    # Seedbox data folder
+DataDB="/media/Runable/DownBox"                    # DownBox data folder
+DataMQ="/media/Runable/Docker/MQ-Data"             # Mosquito data folder
+
+case $1 in
+	"init")
+		case $2 in
+			"lamp")
+				sudo docker run -d --name la --restart=unless-stopped -e TZ=CET -v $DataLM:/var/www/html -p $PortLM:80 -p 3306:3306 lioshi/lamp:php7
+			;;
+   			"homeassistant")
+				sudo docker run -d --name ha --privileged --restart=unless-stopped -e TZ=CET -v $ConfigHA:/config -p 6666:6666 -p 6667:6667 -p $PortHA:8123 homeassistant/home-assistant:latest
+			;;
+			"jellyfin")
+				sudo docker run -d --name jf --restart=unless-stopped -e TZ=CET -v $ConfigJF:/config -v $DataJF:/media -p $PortJF:8096 -p 8920:8920 linuxserver/jellyfin:nightly
+			;;
+			"filebrowser")
+				sudo docker run -d --name fb --privileged --restart=unless-stopped -e TZ=CET -v $DataFB:/srv -v $ConfigFB:/config/ -p $PortFB:80 filebrowser/filebrowser:latest
+			;;
+			"portainer")
+				sudo docker run -d --name po --privileged --restart=unless-stopped -e TZ=CET -p 8000:8000 -p 9443:9443 -p $PortPO:9000 -v /var/run/docker.sock:/var/run/docker.sock -v $ConfigSB:/data portainer/portainer-ce:latest
+			;;
+			"seedbox")
+				sudo git clone https://github.com/ronggang/transmission-web-control.git
+				sudo mkdir $ConfigSB/GUI/
+				sudo mv -f transmission-web-control/src/ $ConfigSB/GUI/
+				sudo rm -rf transmission-web-control/
+				sudo docker run -d --name sb --privileged --restart=unless-stopped -e TZ=CET -e USER=$User -e PASS=$Pass -e TRANSMISSION_WEB_HOME=/config/GUI -p $PortSB:9091 -p 51413:51413 -p 51413:51413/udp -v $ConfigSB:/config -v $DataSB:/downloads/complete lscr.io/linuxserver/transmission:latest
+				sudo docker exec sb cp -r /usr/share/transmission/public_html/index.html /usr/share/transmission/public_html/index.html.old
+				sudo docker exec sb cp -r /config/GUI/src/index.html /usr/share/transmission/public_html/
+				sudo docker exec sb cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
+				sudo docker exec sb cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
+				sudo docker exec sb cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
+			;;
+			"downbox")
+				sudo docker run -d --name transmission --privileged --restart=unless-stopped -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $Config2DB:/etc/openvpn/custom -v $DataDB:/data -v $ConfigDB:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VPNUser -e OPENVPN_PASSWORD=$VPNPass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e OPENVPN_PROVIDER=CUSTOM -e LOCAL_NETWORK=192.168.1.0/32 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:latest
+				sudo docker run -d --name dbp --privileged --restart=unless-stopped --link transmission -p $PortDB:8080 haugene/transmission-openvpn-proxy:latest
+			;;
+			"mqtt")
+				sudo docker run -d --name mq --restart=unless-stopped -e TZ=CET -v $ConfigMQ:/mosquitto/config -v $DataMQ:/mosquitto/data -p $PortMQ:1883 -p 9001:9001  eclipse-mosquitto:2.0
+                sudo docker exec -it mq sh & mosquitto_passwd -C /mosquitto/config/password.txt hass
+			;;
+   			"grocy")
+				sudo docker run -d --name go --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
+			;;
+		esac
+	;;
+esac
 
 ##################################################
-#              Installing upgrade                #
-##################################################
-
-apt-get update -y
-apt-get full-upgrade -y
-
-##################################################
-#              Create work folders               #
-##################################################
-
-mkdir /etc/RJIDomoNas/
-mkdir /etc/RJIDomoNas/old/
-
-##################################################
-#                Install docker                  #
-##################################################
-
-apt-get install ca-certificates curl gnupg -y
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-chmod a+r /etc/apt/keyrings/docker.gpg
-echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo add-apt-repository ppa:alessandro-strada/ppa
-apt-get update -y
-apt-get full-upgrade -y
-apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-
-##################################################
-#                 Install net tools              #
-##################################################
-
-
-apt-get install net-tools -y
-apt-get install iperf -y
-ubuntu-drivers list --gpgpu
-
-##################################################
-#              Install disk tools                #
-##################################################
-
-sudo apt-get install smartmontools -y
-
-##################################################
-#                    Install Samba               #
-##################################################
-
-apt-get install samba -y
-service smbd stop
-rm -rf /etc/samba/smb.conf.*
-mv -f /etc/samba/smb.conf /etc/samba/smb.conf.old
-wget -r https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf
-mv -f ./smb.conf /etc/samba/smb.conf
-service smbd start
-
-##################################################
-#                   Install Glances              #
-##################################################
-
-apt-get install glances -y
-sudo systemctl disable glances.service 
-rm -rf /etc/systemd/system/glances.service.*
-mv -f /etc/systemd/system/glances.service /etc/systemd/system/glances.service.old
-wget -r https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/glances.service
-mv -f ./glances.service /etc/systemd/system/glances.service
-sudo systemctl enable glances.service
-
-##################################################
-#            Install InstallDrives.sh            #
-##################################################
-
-rm -rf /etc/RJIDomoNas/Old/InstallDrives.sh
-mv -f /etc/RJIDomoNas/InstallDrives.sh /etc/RJIDomoNas/Old/InstallDrives.sh
-wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh
-mv -f ./InstallDrives.sh /etc/RJIDomoNas/InstallDrives.sh
-bash /etc/RJIDomoNas/InstallDrives.sh &
-
-##################################################
-#                Install Docker.sh               #
-##################################################
-
-rm -rf /etc/RJIDomoNas/Old/Docker.sh
-mv -f /etc/RJIDomoNas/Docker.sh /etc/RJIDomoNas/Old/Docker.sh
-wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
-mv -f ./Docker.sh /etc/RJIDomoNas/Docker.sh
-
-##################################################
-#                Install .bashrc                 #
-##################################################
-
-rm -rf /home/royjohan/.bashrc.*
-rm -rf /root/.bashrc.*
-mv -f /home/royjohan/.bashrc /home/royjohan/.bashrc.old
-mv -f /root/.bashrc /root/.bashrc.old
-wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc
-mv -f ./.bashrc /home/royjohan/.bashrc
-cp -f /home/royjohan/.bashrc /root/.bashrc
-
-##################################################
-#              Install Update.sh                 #
-##################################################
-
-rm -rf /etc/RJIDomoNas/Old/Update.sh
-mv -f /etc/RJIDomoNas/Update.sh /etc/RJIDomoNas/Old/Update.sh
-wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh
-mv -f ./Update.sh /etc/RJIDomoNas/Update.sh
-
-##################################################
-#                Install crontab                 #
-##################################################
-
-apt-get install cron -y
-rm -rf /etc/RJIDomoNas/Old/mycron
-mv -f /etc/RJIDomoNas/mycron /etc/RJIDomoNas/Old/mycron
-wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/mycron
-mv -f ./mycron /etc/RJIDomoNas/mycron
-sudo crontab /etc/RJIDomoNas/mycron
-
-##################################################
-#                Install nohibernate             #
-##################################################
-
-sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
-touch /etc/systemd/sleep.conf.d/nosuspend.conf
-echo "[Sleep]" >> /etc/systemd/sleep.conf.d/nosuspend.conf
-echo "AllowSuspend=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
-echo "AllowHibernation=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
-echo "AllowSuspendThenHibernate=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
-echo "AllowHybridSleep=no" >> /etc/systemd/sleep.conf.d/nosuspend.conf
-echo 'sleep-inactive-ac-type="blank"' >> /etc/gdm3/greeter.dconf-defaults
-sudo systemctl restart gdm3
-
-##################################################
-#                Install python                  #
-##################################################
-
-rm -rf /etc/RJIDomoNas/Old/get-pip.py
-mv -f /etc/RJIDomoNas/get-pip.py /etc/RJIDomoNas/Old/get-pip.py
-wget -r https://bootstrap.pypa.io/get-pip.py
-mv -f ./get-pip.py /etc/RJIDomoNas/get-pip.py
-sudo python3 /etc/RJIDomoNas/get-pip.py
-
-##################################################
-#               Set credential dataS             #
-##################################################
-
-FILE=/etc/RJIDomoNas/credentials.sh
-if test -f "$FILE"; then
-    echo "credentials set"
-else 
-    wget -r https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/credentials.sh
-    mv -f ./credentials.sh /etc/RJIDomoNas/credentials.sh
-fi
-FILE=/media/Runable/Docker/credentials.sh
-if test -f "$FILE"; then
-    rm -rf /etc/RJIDomoNas/credentials.sh
-    cp /media/Runable/Docker/credentials.sh /etc/RJIDomoNas/credetials.sh
-else 
-    echo "no move"
-fi
-
-##################################################
-#               Install Archive.sh               #
-##################################################
-
-rm -rf /etc/RJIDomoNas/Old/Archive.sh
-mv -f /etc/RJIDomoNas/Archive.sh /etc/RJIDomoNas/Old/Archive.sh
-wget -r "https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Archive.sh"
-mv -f ./Archive.sh /etc/RJIDomoNas/Archive.sh
-
-##################################################
-#                Create smb User                 #
-##################################################
-
-source /etc/RJIDomoNas/credentials.sh # Import credentials
-echo -e "$Passpass\n$Passpass" | smbpasswd -a -s $User # Create new smbuser
-
-
-
-##################################################
-#    @Date : 05/08/2025 12:02                    #
+#    @Date : 05/08/2025 12:48                    #
 #    @Author : @ROYJohan                         #
 #    @Version : 10b                              #
 ##################################################
