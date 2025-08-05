@@ -76,6 +76,14 @@ mv -f /etc/RJIDomoNas/Archive.sh /etc/RJIDomoNas/Old/Archive.sh
 wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Archive.sh
 mv -f ./Archive.sh /etc/RJIDomoNas/Archive.sh
 
+##################################################
+#              Update Renamer.sh                 #
+##################################################
+
+rm -rf /etc/RJIDomoNas/Old/Renamer.sh
+mv -f /etc/RJIDomoNas/Renamer.sh /etc/RJIDomoNas/Old/Renamer.sh
+wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Renamer.sh
+mv -f ./Renamer.sh /etc/RJIDomoNas/Renamer.sh
 
 ##################################################
 #    @Date : 05/08/2025 12:57                    #
