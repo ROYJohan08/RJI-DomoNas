@@ -1,44 +1,84 @@
 #!/bin/bash
 
-mkdir /etc/RJIDomoNas/ # Create launcher folder
-mkdir /etc/RJIDomoNas/Old # Create launcher folder
+##################################################
+#              Installing upgrade                #
+##################################################
 
-service smbd stop # Restart samba
-rm -rf /etc/samba/smb.conf.old # Remove oldest config
-mv /etc/samba/smb.conf /etc/samba/smb.conf.old # Save old config
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/smb.conf # Get samba config.
-mv smb.conf /etc/samba/smb.conf
-service smbd start # Restart samba
+apt-get update -y
+apt-get full-upgrade -y
 
+##################################################
+#              Create work folders               #
+##################################################
 
-rm -rf /etc/RJIDomoNas/Old/Docker.sh # Remove oldest launcher
-mv /etc/RJIDomoNas/Docker.sh /etc/RJIDomoNas/Old/Docker.sh # Save old config.
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Docker.sh
-mv Docker.sh /etc/RJIDomoNas/Docker.sh
+mkdir /etc/RJIDomoNas/ > /dev/null
+mkdir /etc/RJIDomoNas/old/ > /dev/null
 
-rm -rf /home/royjohan/.bashrc.old # Remove Oldest BashRC
-rm -rf /root/.bashrc.old # Remove Oldest BashRC
-cp /home/royjohan/.bashrc /home/royjohan/.bashrc.old # Save old bashRc
-cp /root/.bashrc /root/.bashrc.old # Save old bashRc
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/.bashrc # Get new bashrc
+##################################################
+#                   Update samba                 #
+##################################################
+
+service smbd sto
+rm -rf /etc/samba/smb.conf.*
+mv -f /etc/samba/smb.conf /etc/samba/smb.conf.old
+wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/smb.conf
+mv -f ./smb.conf /etc/samba/smb.conf
+service smbd start
+
+##################################################
+#                Update Docker.sh                #
+##################################################
+
+rm -rf /etc/RJIDomoNas/Old/Docker.sh
+mv -f /etc/RJIDomoNas/Docker.sh /etc/RJIDomoNas/Old/Docker.sh.
+wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Docker.sh
+mv -f ./Docker.sh /etc/RJIDomoNas/Docker.sh
+
+##################################################
+#                 Update  .bashrc                #
+##################################################
+
+rm -rf /home/royjohan/.bashrc.*
+rm -rf /root/.bashrc.*
+cp /home/royjohan/.bashrc /home/royjohan/.bashrc.old
+cp /root/.bashrc /root/.bashrc.old
+wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/.bashrc
 yes | cp -rf .bashrc /home/royjohan/.bashrc
 yes | cp -rf /home/royjohan/.bashrc /root/.bashrc
-source /root/.bashrc # Restart alias.
-source /home/royjohan/.bashrc # Restart alias.
+source /root/.bashrc
+source /home/royjohan/.bashrc
 
-rm -rf /etc/RJIDomoNas/Old/InstallDrives.sh # Remove Oldest Update
-mv /etc/RJIDomoNas/InstallDrives.sh /etc/RJIDomoNas/Old/InstallDrives.sh # Save old Update
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/InstallDrives.sh #Get new Update
-mv InstallDrives.sh /etc/RJIDomoNas/InstallDrives.sh
+##################################################
+#           Update InstallDrives.sh              #
+##################################################
+
+rm -rf /etc/RJIDomoNas/Old/InstallDrives.sh
+mv -f /etc/RJIDomoNas/InstallDrives.sh /etc/RJIDomoNas/Old/InstallDrives.sh
+wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/InstallDrives.sh
+mv ./InstallDrives.sh /etc/RJIDomoNas/InstallDrives.sh
+
+##################################################
+#                  Update mycron                 #
+##################################################
 
 rm -rf /etc/RJIDomoNas/Old/mycron
-mv /etc/RJIDomoNas/mycron /etc/RJIDomoNas/Old/mycron
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/mycron # Get Crontab
-mv mycron /etc/RJIDomoNas/mycron
-sudo crontab /etc/RJIDomoNas/mycron # Set Crontab into crontab
+mv -f /etc/RJIDomoNas/mycron /etc/RJIDomoNas/Old/mycron
+wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/mycron
+mv -f ./mycron /etc/RJIDomoNas/mycron
+sudo crontab /etc/RJIDomoNas/mycron
+
+##################################################
+#              Update Archive.sh                 #
+##################################################
 
 rm -rf /etc/RJIDomoNas/Old/Archive.sh
-mv /etc/RJIDomoNas/Archive.sh /etc/RJIDomoNas/Old/Archive.sh
-wget https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Archive.sh # Get Crontab
-mv Archive.sh /etc/RJIDomoNas/Archive.sh
+mv -f /etc/RJIDomoNas/Archive.sh /etc/RJIDomoNas/Old/Archive.sh
+wget -r https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Archive.sh
+mv -f ./Archive.sh /etc/RJIDomoNas/Archive.sh
 
+
+##################################################
+#    @Date : 05/08/2025 12:57                    #
+#    @Author : @ROYJohan                         #
+#    @Version : 10b                              #
+##################################################
