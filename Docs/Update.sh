@@ -12,7 +12,7 @@ apt-get full-upgrade -y
 ##################################################
 
 mkdir /etc/RJIDomoNas/ > /dev/null
-mkdir /etc/RJIDomoNas/old/ > /dev/null
+mkdir /etc/RJIDomoNas/Old/ > /dev/null
 
 ##################################################
 #                   Update samba                 #
