@@ -69,6 +69,8 @@ alias lsvm='docker ps'
 alias sudo='sudo '
 alias samba='service smbd'
 alias glances='glances -w &'
+alias cparchive='cp -a -d -f -R -u -v '
+alias archive='bash /etc/RJIDomoNas/Archive.sh '
 
 ##################################################
 #                  Disk alias                    #
