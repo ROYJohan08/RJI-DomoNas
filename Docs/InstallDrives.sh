@@ -16,8 +16,8 @@ echo "/dev/disk/by-uuid/0C2020846A4195D6 /media/Series02 auto noatime 0 1" >> /e
 echo "/dev/disk/by-uuid/6877284162D6D93C /media/Series03 auto noatime 0 1" >> /etc/fstab
 echo "/dev/disk/by-uuid/23BF5EEE4C02F6EE /media/Films01 auto noatime 0 1" >> /etc/fstab
 echo "/dev/disk/by-uuid/E8D250EAD250BF0E /media/Films02 auto noatime 0 1" >> /etc/fstab
-echo "/dev/disk/by-uuid/47897A4638C18B4F /media/Docs01 auto noatime 0 1" >> /etc/fstab
-echo "/dev/disk/by-uuid/E8DA9EC8DA9E9304 /media/Runable auto noatime 0 1" >> /etc/fstab
+echo "/dev/disk/by-uuid/1233D736318CD68C /media/Docs01 auto noatime 0 1" >> /etc/fstab
+echo "/dev/disk/by-uuid/00C52F7F6202AA50 /media/Runable auto noatime 0 1" >> /etc/fstab
 echo "/dev/disk/by-uuid/294D561D3EF1F925 /media/Archive auto noatime 0 1" >> /etc/fstab
 
 sudo mount -a --onlyonce
