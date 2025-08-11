@@ -39,8 +39,6 @@ then
 	cp -a -d -f -R -u -v /media/Docs01/Jeux/*-A.* /media/Archive/Docs/Jeux/ 
 
  	echo date "+%d/%m/%y %H:%M:%S" > /media/Archive/LastArchive.dt
- 	
-else
 fi
 
 ##################################################
