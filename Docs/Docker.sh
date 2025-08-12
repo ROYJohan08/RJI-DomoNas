@@ -1,6 +1,6 @@
 #!bin/sh
 
-source /etc/RJIDocker/credentials.sh
+source /etc/RJIDomoNas/credentials.sh
 
 PortLM=80   # Lamp port
 PortHA=1000 # HomeAssistant port
