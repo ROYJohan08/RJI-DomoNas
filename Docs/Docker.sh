@@ -11,7 +11,7 @@ PortGO=1004 # Grocy port
 PortPO=1005 # Portainer port
 PortFB=1006 # FileBrowser port
 PortMQ=1007 # MQTT por
-PortPf=1008 # PinchFlat pory
+PortPf=999 # PinchFlat pory
 
 ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
 ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
