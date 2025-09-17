@@ -10,7 +10,8 @@ PortSB=1003 # SeedBox port
 PortGO=1004 # Grocy port
 PortPO=1005 # Portainer port
 PortFB=1006 # FileBrowser port
-PortMQ=1007 # MQTT port
+PortMQ=1007 # MQTT por
+PortPf=1008 # PinchFlat pory
 
 ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
 ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
@@ -22,6 +23,7 @@ ConfigDB="/media/Runable/Docker/DB-Config"         # Downbox config folder
 Config2DB="/media/Runable/Docker/DB-Config/custom" # Downbox config folder ovpn
 ConfigMQ="/media/Runable/Docker/MQ-Config/"        # Mosquito config folder
 ConfigGO="/media/Runable/Docker/GO-Config/"        # Grocy config folder
+ConfigPF="/media/Runable/Docker/PF-Config/"        # Grocy config folder
 
 DataLM="/media/Runable/Docker/LM-Data"             # Lamp data folder
 DataJF="/media/"                                   # Jellyfin data folder
@@ -29,6 +31,7 @@ DataFB="/"                                         # FileBrowser data folder
 DataSB="/media/Runable/SeedBox"                    # Seedbox data folder
 DataDB="/media/Runable/DownBox"                    # DownBox data folder
 DataMQ="/media/Runable/Docker/MQ-Data"             # Mosquito data folder
+DataPF="/media/Runable/DownBox"                    # DownBox data folder
 
 case $1 in
 	"init")
@@ -70,6 +73,9 @@ case $1 in
 			;;
    			"grocy")
 				sudo docker run -d --name go --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
+			;;
+   			"pinch")
+				sudo docker run -d --name pf --restart=unless-stopped -e TZ=CET -v $ConfigPF:/config -v $DataPF:/downloads  -p $PortGO:8945  ghcr.io/kieraneglin/pinchflat:latest
 			;;
 		esac
 	;;
