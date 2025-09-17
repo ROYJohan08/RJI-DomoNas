@@ -75,7 +75,7 @@ case $1 in
 				sudo docker run -d --name go --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
 			;;
    			"pinch")
-				sudo docker run -d --name pf --restart=unless-stopped -e TZ=CET -v $ConfigPF:/config -v $DataPF:/downloads  -p $PortGO:8945  ghcr.io/kieraneglin/pinchflat:latest
+				sudo docker run -d --name pf --restart=unless-stopped -e TZ=CET -v $ConfigPF:/config -v $DataPF:/downloads  -p $PortPF:8945  ghcr.io/kieraneglin/pinchflat:latest
 			;;
 		esac
 	;;
