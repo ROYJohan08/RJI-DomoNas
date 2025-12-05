@@ -1,6 +1,6 @@
-#!bin/sh
+#!/bin/sh
 
-if mount | awk '{if ($3 == "/media/Archive") { exit 0}} ENDFILE{exit -1}'
+if mount | grep -q 'on /media/Archive '
 then
 
     ##################################################
@@ -8,16 +8,15 @@ then
     ##################################################
 
 	echo "Archivage ---- Creation des dossiers... "
-    mkdir /media/Archive/Runable/ >/dev/null
-    mkdir /media/Archive/Docker/ >/dev/null
-    mkdir /media/Archive/Films/ >/dev/null
-    mkdir /media/Archive/Series/ >/dev/null
-    mkdir /media/Archive/Docs/ >/dev/null
-    mkdir /media/Archive/Docs/"+18"/ >/dev/null
-    mkdir /media/Archive/Docs/Musiques/ >/dev/null
-    mkdir /media/Archive/Docs/Photographies/ >/dev/null
-    mkdir /media/Archive/Docs/Livres/ >/dev/null
-    mkdir /media/Archive/Docs/Jeux/ >/dev/null
+   # Crée tous les dossiers en une seule fois, y compris les parents, sans erreur si existant
+mkdir -p /media/Archive/Runable/Docker/ \
+         /media/Archive/Films/ \
+         /media/Archive/Series/ \
+         /media/Archive/Docs/"+18"/ \
+         /media/Archive/Docs/Musiques/ \
+         /media/Archive/Docs/Photographies/ \
+         /media/Archive/Docs/Livres/ \
+         /media/Archive/Docs/Jeux/ >/dev/null
 	echo "Archivage ---- Creation des dossiers... OK"
 	
     ##################################################
@@ -44,11 +43,11 @@ then
 	cp -a -d -f -R -u -v /media/Films01/*/*-A.* /media/Archive/Films/  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des '-A' du disque Film01...OK"
   	echo "Archivage ---- Archivage des '-A' du disque Film02..."
-  	cp -a -d -f -R -u -v /media/Films01/*-A.* /media/Archive/Films/  >> /media/Archive/Log.dat
-	cp -a -d -f -R -u -v /media/Films01/*/*-A.* /media/Archive/Films/  >> /media/Archive/Log.dat
+  	cp -a -d -f -R -u -v /media/Films02/*-A.* /media/Archive/Films/  >> /media/Archive/Log.dat
+	cp -a -d -f -R -u -v /media/Films02/*/*-A.* /media/Archive/Films/  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des '-A' du disque Film02...OK"
   	echo "Archivage ---- Archivage des documents +18..."
-	cp -a -d -f -R -u -v /media/Docs01/"+18"/* /media/Archive/Docs/"+18"/  >> /media/Archive/Log.dat
+	cp -a -d -f -R -u -v "/media/Docs01/+18/"* "/media/Archive/Docs/+18/"  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des documents +18...OK"
   	echo "Archivage ---- Archivage des musiques..."
 	cp -a -d -f -R -u -v /media/Docs01/Musiques/* /media/Archive/Docs/Musiques/  >> /media/Archive/Log.dat
@@ -63,12 +62,12 @@ then
 	cp -a -d -f -R -u -v /media/Docs01/Jeux/*-A.* /media/Archive/Docs/Jeux/  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des '-A' des jeux...OK"
 	echo "Archivage ---- Srockage de la date"
- 	echo date "+%d/%m/%y %H:%M:%S" > /media/Archive/LastArchive.dt
+ 	echo "$(date "+%d/%m/%y %H:%M:%S")" > /media/Archive/LastArchive.dt
   	echo "Archivage ---- Archivage ---- FIN"
 fi
 
 ##################################################
-#    @Date : 11/08/2025 08:50                    #
+#    @Date : 05/12/2025 12:45                    #
 #    @Author : @ROYJohan                         #
-#    @Version : 10b                              #
+#    @Version : 12b                              #
 ##################################################
