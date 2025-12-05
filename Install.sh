@@ -36,6 +36,7 @@ apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docke
 ##################################################
 
 
+at-get install git-all -y
 apt-get install net-tools -y
 apt-get install iperf -y
 ubuntu-drivers list --gpgpu
