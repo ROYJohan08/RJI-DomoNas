@@ -1,12 +1,7 @@
-@reboot sudo glances -w &
-@reboot sudo iperf -s
-@reboot sudo mount -a
-@reboot sudo upup
-@reboot sudo rjiup
-@hourly sudo mount -a --onlyonce
-50 6 * * * sudo docker restart jellyfin
-50 6 * * * sudo docker restart seedbox
-50 6 * * * sudo docker restart transmission
-50 6 * * * sudo docker restart downboxproxy
-50 6 * * * sudo docker restart grocy
-50 6 * * * sudo /etc/RJIDomoNas/Archive.sh &
+@reboot glances -w &
+@reboot iperf -s
+@reboot mount -a
+@reboot upup
+@reboot rjiup
+@hourly mount -a --onlyonce
+50 6 * * * /bin/bash /etc/RJIDomoNas/Archive.sh &
