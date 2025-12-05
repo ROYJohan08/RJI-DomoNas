@@ -86,7 +86,7 @@ alias mdisk='mount -a --onlyonce'
 alias agu='sudo apt-get update -y'
 alias agg='sudo apt-get upgrade -y'
 alias agd='sudo apt-get dist-upgrade -y'
-alias upup='sudo wget -r -O /etc/RJIDomoNas/Update.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Update.sh'
+alias upup='sudo wget -O /etc/RJIDomoNas/Update.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/Update.sh'
 alias rjiup='sudo bash /etc/RJIDomoNas/Update.sh'
 alias maj='agu && agg && agd && upup && rjiup'
 
