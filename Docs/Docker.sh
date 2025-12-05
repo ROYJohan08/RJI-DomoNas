@@ -1,88 +1,109 @@
-#!bin/sh
+#!/bin/sh
 
 source /etc/RJIDomoNas/credentials.sh
 
-PortLM=80   # Lamp port
-PortHA=1000 # HomeAssistant port
-PortJF=1001 # JellyFin port
-PortDB=1002 # DownBox port
-PortSB=1003 # SeedBox port 
-PortGO=1004 # Grocy port
-PortPO=1005 # Portainer port
-PortFB=1006 # FileBrowser port
-PortMQ=1007 # MQTT por
-PortPF=1008 # PinchFlat pory
+LMPort=80
+LMData="/media/Runable/Docker/LM-Data"
 
-ConfigLM="/media/Runable/Docker/LM-Config/"        # Lamp config folder
-ConfigHA="/media/Runable/Docker/HA-Config"         # HomeAssistant config folder
-ConfigJF="/media/Runable/Docker/JF-Config"         # Jellyfin config folder
-ConfigFB="/media/Runable/Docker/FB-Config/"        # FileBrowser config folder
-ConfigPO="/media/Runable/Docker/PO-Config"         # Portainer config folder
-ConfigSB="/media/Runable/Docker/SB-Config"         # SeedBox config folder
-ConfigDB="/media/Runable/Docker/DB-Config"         # Downbox config folder
-Config2DB="/media/Runable/Docker/DB-Config/custom" # Downbox config folder ovpn
-ConfigMQ="/media/Runable/Docker/MQ-Config/"        # Mosquito config folder
-ConfigGO="/media/Runable/Docker/GO-Config/"        # Grocy config folder
-ConfigPF="/media/Runable/Docker/PF-Config/"        # Grocy config folder
+HAPort=1000
+HAConfig="/media/Runable/Docker/HA-Config"
 
-DataLM="/media/Runable/Docker/LM-Data"             # Lamp data folder
-DataJF="/media/"                                   # Jellyfin data folder
-DataFB="/"                                         # FileBrowser data folder
-DataSB="/media/Runable/SeedBox"                    # Seedbox data folder
-DataDB="/media/Runable/DownBox"                    # DownBox data folder
-DataMQ="/media/Runable/Docker/MQ-Data"             # Mosquito data folder
-DataPF="/media/Runable/DownBox"                    # DownBox data folder
+JFPort=1001
+JFConfig="/media/Runable/Docker/JF-Config"
+JFCache="/media/Runable/Docker/JF-Cache"
+JFData="/media/"
+
+FBPort=1006
+FBConfig="/media/Runable/Docker/FB-Config/"
+FBData="/media/"
+FBBase="/media/Runable/Docker/FB-Database/"
+
+POPort=1005
+PODocker="/var/run/docker.sock"
+POConfig="/media/Runable/Docker/PO-Config"
+
+GOPort=1004
+GOConfig="/media/Runable/Docker/GO-Config/"
+
+MQPort=1007
+MQConfig="/media/Runable/Docker/MQ-Config/"
+MQData="/media/Runable/Docker/MQ-Data"
+MQPassword="/mosquitto/config/password.txt"
+
+DBPort=1002
+DBConfig="/media/Runable/Docker/DB-Config"
+DBCustom="/media/Runable/Docker/DB-Config/custom"
+DBData="/media/Runable/DownBox"
+
+SBPort=1003
+SBCOnfig="/media/Runable/Docker/SB-Config"
+SBData="/media/Runable/SeedBox" 
 
 case $1 in
-	"init")
-		case $2 in
-			"lamp")
-				sudo docker run -d --name la --restart=unless-stopped -e TZ=CET -v $DataLM:/var/www/html -p $PortLM:80 -p 3306:3306 lioshi/lamp:php7
-			;;
-   			"homeassistant")
-				sudo docker run -d --name ha --privileged --restart=unless-stopped -e TZ=CET -v $ConfigHA:/config -p 6666:6666 -p 6667:6667 -p $PortHA:8123 homeassistant/home-assistant:latest
-			;;
-			"jellyfin")
-				sudo docker run -d --name jf --restart=unless-stopped -e TZ=CET -v $ConfigJF:/config -v $DataJF:/media -p $PortJF:8096 -p 8920:8920 linuxserver/jellyfin:nightly
-			;;
-			"filebrowser")
-				sudo docker run -d --name fb --privileged --restart=unless-stopped -e TZ=CET -v $DataFB:/srv -v $ConfigFB:/config/ -p $PortFB:80 filebrowser/filebrowser:latest
-			;;
-			"portainer")
-				sudo docker run -d --name po --privileged --restart=unless-stopped -e TZ=CET -p 8000:8000 -p 9443:9443 -p $PortPO:9000 -v /var/run/docker.sock:/var/run/docker.sock -v $ConfigSB:/data portainer/portainer-ce:latest
-			;;
-			"seedbox")
-				sudo git clone https://github.com/ronggang/transmission-web-control.git
-				sudo mkdir $ConfigSB/GUI/
-				sudo mv -f transmission-web-control/src/ $ConfigSB/GUI/
-				sudo rm -rf transmission-web-control/
-				sudo docker run -d --name sb --privileged --restart=unless-stopped -e TZ=CET -e USER=$User -e PASS=$Pass -e TRANSMISSION_WEB_HOME=/config/GUI -p $PortSB:9091 -p 51413:51413 -p 51413:51413/udp -v $ConfigSB:/config -v $DataSB:/downloads/complete lscr.io/linuxserver/transmission:latest
-				sudo docker exec sb cp -r /usr/share/transmission/public_html/index.html /usr/share/transmission/public_html/index.html.old
-				sudo docker exec sb cp -r /config/GUI/src/index.html /usr/share/transmission/public_html/
-				sudo docker exec sb cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
-				sudo docker exec sb cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
-				sudo docker exec sb cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
-			;;
-			"downbox")
-				sudo docker run -d --name transmission --privileged --restart=unless-stopped -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $Config2DB:/etc/openvpn/custom -v $DataDB:/data -v $ConfigDB:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VPNUser -e OPENVPN_PASSWORD=$VPNPass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e OPENVPN_PROVIDER=CUSTOM -e LOCAL_NETWORK=192.168.1.0/32 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:latest
-				sudo docker run -d --name dbp --privileged --restart=unless-stopped --link transmission -p $PortDB:8080 haugene/transmission-openvpn-proxy:latest
-			;;
-			"mqtt")
-				sudo docker run -d --name mq --restart=unless-stopped -e TZ=CET -v $ConfigMQ:/mosquitto/config -v $DataMQ:/mosquitto/data -p $PortMQ:1883 -p 9001:9001  eclipse-mosquitto:2.0
-                sudo docker exec -it mq sh & mosquitto_passwd -C /mosquitto/config/password.txt hass
-			;;
-   			"grocy")
-				sudo docker run -d --name go --restart=unless-stopped -e TZ=CET -v $ConfigGO:/config  -p $PortGO:80  lscr.io/linuxserver/grocy:latest
-			;;
-   			"pinch")
-				sudo docker run -d --name pf --restart=unless-stopped -e TZ=CET -v $ConfigPF:/config -v $DataPF:/downloads  -p $PortPF:8945  ghcr.io/kieraneglin/pinchflat:latest
-			;;
-		esac
+	"all")
+		sudo docker run -d --name Lamp --restart=unless-stopped -e TZ=CET -v $LMData:/app -p $LMPort:80 -p 3306:3306 mattrayner/lamp:latest
+		sudo docker run -d --name Homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $HAConfig:/config -p 6666:6666 -p 6667:6667 -p $HAPort:8123 homeassistant/home-assistant:latest
+		sudo docker run -d --name Jellyfin --restart=unless-stopped -e TZ=CET -v $JFConfig:/config -v $JFData:/media -v $JFCache:/cache -p $JFPort:8096 -p 8920:8920 jellyfin/jellyfin:latest
+		sudo docker run -d --name Filebrowser --privileged --restart=unless-stopped -e TZ=CET -v $FBData:/srv -v $FBBase:/database -v $FBConfig:/config/ -p $FBPort:80 filebrowser/filebrowser:latest
+		sudo docker run -d --name Portainer --privileged --restart=unless-stopped -e TZ=CET -p 8000:8000 -p 9443:9443 -p $POPort:9000 -v $PODocker:/var/run/docker.sock -v $POConfig:/data portainer/portainer-ce:latest
+		sudo docker run -d --name Grocy --restart=unless-stopped -e TZ=CET -v $GOConfig:/config  -p $GOPort:80  lscr.io/linuxserver/grocy:latest
+		sudo docker run -d --name Mqtt --restart=unless-stopped -e TZ=CET -v $MQConfig:/mosquitto/config -v $MQData:/mosquitto/data -p $MQPort:1883 -p 9001:9001  eclipse-mosquitto:latest
+		sudo docker run -d --name transmission --privileged --restart=unless-stopped -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $DBCustom:/etc/openvpn/custom -v $DBData:/data -v $DBConfig:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VPNUser -e OPENVPN_PASSWORD=$VPNPass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e OPENVPN_PROVIDER=CUSTOM -e LOCAL_NETWORK=192.168.1.0/32 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:latest
+		sudo docker run -d --name dDBProxy --privileged --restart=unless-stopped --link transmission -p $DBPort:8080 haugene/transmission-openvpn-proxy:latest
+		sudo docker run -d --name Seedbox --privileged --restart=unless-stopped -e TZ=CET -e USER=$User -e PASS=$Pass -e TRANSMISSION_WEB_HOME=/config/GUI -p $SBPort:9091 -p 51413:51413 -p 51413:51413/udp -v $SBConfig:/config -v $SBData:/downloads/complete lscr.io/linuxserver/transmission:latest
+		sudo docker exec Mqtt sh -c "mosquitto_passwd -c $MQPassword hass"
+		sudo git clone https://github.com/ronggang/transmission-web-control.git
+		sudo mkdir $SBConfig/GUI/
+		sudo mv -f transmission-web-control/src/ $SBConfig/GUI/
+		sudo rm -rf transmission-web-control/
+		sudo docker exec Seedbox cp -r /usr/share/transmission/public_html/index.html /usr/share/transmission/public_html/index.html.old
+		sudo docker exec Seedbox cp -r /config/GUI/src/index.html /usr/share/transmission/public_html/
+		sudo docker exec Seedbox cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
+		sudo docker exec Seedbox cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
+		sudo docker exec Seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
+	;;
+	"lamp")
+		sudo docker run -d --name Lamp --restart=unless-stopped -e TZ=CET -v $LMData:/app -p $LMPort:80 -p 3306:3306 mattrayner/lamp:latest
+	;;
+	"homeassistant")
+		sudo docker run -d --name Homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $HAConfig:/config -p 6666:6666 -p 6667:6667 -p $HAPort:8123 homeassistant/home-assistant:latest
+	;;
+	"jellyfin")
+		sudo docker run -d --name Jellyfin --restart=unless-stopped -e TZ=CET -v $JFConfig:/config -v $JFData:/media -v $JFCache:/cache -p $JFPort:8096 -p 8920:8920 jellyfin/jellyfin:latest
+	;;
+	"filebrowser")
+		sudo docker run -d --name Filebrowser --privileged --restart=unless-stopped -e TZ=CET -v $FBData:/srv -v $FBBase:/database -v $FBConfig:/config/ -p $FBPort:80 filebrowser/filebrowser:latest
+	;;
+	"portainer")
+		sudo docker run -d --name Portainer --privileged --restart=unless-stopped -e TZ=CET -p 8000:8000 -p 9443:9443 -p $POPort:9000 -v $PODocker:/var/run/docker.sock -v $POConfig:/data portainer/portainer-ce:latest
+	;;
+	"grocy")
+		sudo docker run -d --name Grocy --restart=unless-stopped -e TZ=CET -v $GOConfig:/config  -p $GOPort:80  lscr.io/linuxserver/grocy:latest
+	;;
+	"mqtt")
+		sudo docker run -d --name Mqtt --restart=unless-stopped -e TZ=CET -v $MQConfig:/mosquitto/config -v $MQData:/mosquitto/data -p $MQPort:1883 -p 9001:9001  eclipse-mosquitto:latest
+        sudo docker exec Mqtt sh -c "mosquitto_passwd -c $MQPassword hass"
+	;;
+	"downbox")
+		sudo docker run -d --name transmission --privileged --restart=unless-stopped -p 9091:9091  -p 51415:51414 -p 51415:51414/udp --cap-add=NET_ADMIN -e TRANSMISSION_WEB_UI=transmission-web-control -v $DBCustom:/etc/openvpn/custom -v $DBData:/data -v $DBConfig:/config -e OPENVPN_PROVIDER=CUSTOM -e OPENVPN_USERNAME=$VPNUser -e OPENVPN_PASSWORD=$VPNPass -e UFW_ALLOW_GW_NET=true -e UFW_EXTRA_PORTS=9910,23561,443,83,9091 -e DROP_DEFAULT_ROUTE=true -e TRANSMISSION_RPC_USERNAME="$User" -e TRANSMISSION_RPC_PASSWORD="$Pass" -e TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true -e TRANSMISSION_RPC_WHITELIST_ENABLED=false -e OPENVPN_PROVIDER=CUSTOM -e LOCAL_NETWORK=192.168.1.0/32 --log-driver json-file --log-opt max-size=10m haugene/transmission-openvpn:latest
+		sudo docker run -d --name Dbproxy --privileged --restart=unless-stopped --link transmission -p $DBPort:8080 haugene/transmission-openvpn-proxy:latest
+	;;
+	"seedbox")
+		sudo docker run -d --name Seedbox --privileged --restart=unless-stopped -e TZ=CET -e USER=$User -e PASS=$Pass -e TRANSMISSION_WEB_HOME=/config/GUI -p $SBPort:9091 -p 51413:51413 -p 51413:51413/udp -v $SBConfig:/config -v $SBData:/downloads/complete lscr.io/linuxserver/transmission:latest
+		sudo git clone https://github.com/ronggang/transmission-web-control.git
+		sudo mkdir $SBConfig/GUI/
+		sudo mv -f transmission-web-control/src/ $SBConfig/GUI/
+		sudo rm -rf transmission-web-control/
+		sudo docker exec Seedbox cp -r /usr/share/transmission/public_html/index.html /usr/share/transmission/public_html/index.html.old
+		sudo docker exec Seedbox cp -r /config/GUI/src/index.html /usr/share/transmission/public_html/
+		sudo docker exec Seedbox cp -r /config/GUI/src/index.moble.html /usr/share/transmission/public_html/
+		sudo docker exec Seedbox cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
+		sudo docker exec Seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
 	;;
 esac
 
 ##################################################
-#    @Date : 05/08/2025 12:48                    #
+#    @Date : 05/12/2025 12:14                    #
 #    @Author : @ROYJohan                         #
-#    @Version : 10b                              #
+#    @Version : 12b                              #
 ##################################################
