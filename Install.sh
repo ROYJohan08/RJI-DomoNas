@@ -6,6 +6,9 @@
 
 apt-get update -y
 apt-get full-upgrade -y
+apt-get autoremove -y
+apt-get autoclean -y
+apt-get clean -y
 
 ##################################################
 #              Create work folders               #
@@ -41,7 +44,7 @@ ubuntu-drivers list --gpgpu
 #              Install disk tools                #
 ##################################################
 
-sudo apt-get install smartmontools -y
+apt-get install smartmontools -y
 
 ##################################################
 #                    Install Samba               #
@@ -65,7 +68,7 @@ rm -rf /etc/systemd/system/glances.service.*
 mv -f /etc/systemd/system/glances.service /etc/systemd/system/glances.service.old
 wget -r https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/glances.service
 mv -f ./glances.service /etc/systemd/system/glances.service
-sudo systemctl enable glances.service
+systemctl enable glances.service
 
 ##################################################
 #            Install InstallDrives.sh            #
