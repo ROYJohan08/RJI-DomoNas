@@ -53,8 +53,7 @@ apt-get install smartmontools -y
 
 apt-get install samba -y
 service smbd stop
-rm -rf /etc/samba/smb.conf.*
-mv -f /etc/samba/smb.conf /etc/samba/smb.conf.old
+mv -f /etc/samba/smb.conf /etc/RJIDomoNas/Old/smb.conf
 wget -O /etc/samba/smb.conf https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf
 service smbd start
 
@@ -64,8 +63,7 @@ service smbd start
 
 apt-get install glances -y
 systemctl disable glances.service 
-rm -rf /etc/systemd/system/glances.service.*
-mv -f /etc/systemd/system/glances.service /etc/systemd/system/glances.service.old
+mv -f /etc/systemd/system/glances.service /etc/RJIDomoNas/Old/glances.service
 wget -O /etc/systemd/system/glances.service https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/glances.service
 systemctl enable glances.service
 
@@ -73,8 +71,6 @@ systemctl enable glances.service
 #            Install InstallDrives.sh            #
 ##################################################
 
-rm -rf /etc/RJIDomoNas/Old/InstallDrives.sh
-mv -f /etc/RJIDomoNas/InstallDrives.sh /etc/RJIDomoNas/Old/InstallDrives.sh
 wget -O /etc/RJIDomoNas/InstallDrives.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh
 bash /etc/RJIDomoNas/InstallDrives.sh
 
@@ -82,8 +78,6 @@ bash /etc/RJIDomoNas/InstallDrives.sh
 #                Install Docker.sh               #
 ##################################################
 
-rm -rf /etc/RJIDomoNas/Old/Docker.sh
-mv -f /etc/RJIDomoNas/Docker.sh /etc/RJIDomoNas/Old/Docker.sh
 wget -O /etc/RJIDomoNas/Docker.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
 
 ##################################################
@@ -92,8 +86,8 @@ wget -O /etc/RJIDomoNas/Docker.sh https://github.com/ROYJohan08/DomotikHomeNas/r
 
 rm -rf /home/royjohan/.bashrc.*
 rm -rf /root/.bashrc.*
-mv -f /home/royjohan/.bashrc /home/royjohan/.bashrc.old
-mv -f /root/.bashrc /root/.bashrc.old
+mv -f /home/royjohan/.bashrc /etc/RJIDomoNas/Old/royjohan.bashrc
+mv -f /root/.bashrc /etc/RJIDomoNas/Old/root.bashrc
 wget -O /home/royjohan/.bashrc https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc
 cp -f /home/royjohan/.bashrc /root/.bashrc
 sudo -u royjohan bash -c "source /home/royjohan/.bashrc"
@@ -103,8 +97,6 @@ source /root/.bashrc
 #              Install Update.sh                 #
 ##################################################
 
-rm -rf /etc/RJIDomoNas/Old/Update.sh
-mv -f /etc/RJIDomoNas/Update.sh /etc/RJIDomoNas/Old/Update.sh
 wget -O /etc/RJIDomoNas/Update.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Update.sh
 
 ##################################################
@@ -112,7 +104,6 @@ wget -O /etc/RJIDomoNas/Update.sh https://github.com/ROYJohan08/DomotikHomeNas/r
 ##################################################
 
 apt-get install cron -y
-rm -rf /etc/RJIDomoNas/Old/mycron
 mv -f /etc/RJIDomoNas/mycron /etc/RJIDomoNas/Old/mycron
 wget -O /etc/RJIDomoNas/mycron https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/mycron
 sudo crontab /etc/RJIDomoNas/mycron
@@ -163,8 +154,6 @@ fi
 #               Install Archive.sh               #
 ##################################################
 
-rm -rf /etc/RJIDomoNas/Old/Archive.sh
-mv -f /etc/RJIDomoNas/Archive.sh /etc/RJIDomoNas/Old/Archive.sh
 wget -O /etc/RJIDomoNas/Archive.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/main/Docs/Archive.sh
 
 ##################################################
