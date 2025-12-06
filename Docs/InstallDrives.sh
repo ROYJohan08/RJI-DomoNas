@@ -10,7 +10,8 @@ mkdir/media/Series02
 mkdir/media/Series03
 mkdir /media/Docs01 
 mkdir /media/Runable
-mkdir /media/Temp /media/Archive
+mkdir /media/Temp 
+
 # --------------------------------------------------
 # AJOUT DANS /etc/fstab (Conditionnel : évite les doublons)
 # --------------------------------------------------
