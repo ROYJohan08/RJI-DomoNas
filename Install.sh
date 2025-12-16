@@ -16,6 +16,8 @@ apt-get clean -y
 
 mkdir /etc/RJIDomoNas/
 mkdir /etc/RJIDomoNas/Old/
+chmod -R 777 /etc/RJIDomoNas/
+chown -R royjohan:royjohan /etc/RJIDomoNas/
 
 ##################################################
 #                Install docker                  #
