@@ -1,7 +1,7 @@
 #!/bin/sh
 
 source /etc/RJIDomoNas/credentials.sh
-
+# Do 'id royjohan' and run
 USER_ID=1000
 GROUP_ID=1000
 
