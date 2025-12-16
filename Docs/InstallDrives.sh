@@ -12,6 +12,8 @@ mkdir /media/Docs01
 mkdir /media/Runable
 mkdir /media/Temp 
 
+chmod -R 777 /media/
+
 # --------------------------------------------------
 # AJOUT DANS /etc/fstab (Conditionnel : évite les doublons)
 # --------------------------------------------------
