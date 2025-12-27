@@ -46,7 +46,7 @@ case $1 in
 	"all")
 		sudo docker run -d --name Lamp --restart=unless-stopped -e TZ=CET -v $LMData:/app -p $LMPort:80 -p 3306:3306 mattrayner/lamp:latest
 		sudo docker run -d --name Homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $HAConfig:/config -p 6666:6666 -p 6667:6667 -p $HAPort:8123 homeassistant/home-assistant:latest
-		sudo docker run -d --name Jellyfin --restart=unless-stopped -e TZ=CET -e PUID=$USER_ID -e PGID=$GROUP_ID -v $JFConfig:/config -v $JFData:/media -v $JFCache:/cache -p $JFPort:8096 -p 8920:8920 jellyfin/jellyfin:latest
+		sudo docker run -d --name Jellyfin --restart=unless-stopped -d /dev/dri/renderD128:/dev/dri/renderD128 -e TZ=CET -e PUID=$USER_ID -e PGID=$GROUP_ID -v $JFConfig:/config -v $JFData:/media -v $JFCache:/cache -p $JFPort:8096 -p 8920:8920 jellyfin/jellyfin:latest
 		sudo docker run -d --name Filebrowser --privileged --restart=unless-stopped -e TZ=CET -v $FBData:/srv -v $FBBase:/database -v $FBConfig:/config/ -p $FBPort:80 filebrowser/filebrowser:latest
 		sudo docker run -d --name Portainer --privileged --restart=unless-stopped -e TZ=CET -p 8000:8000 -p 9443:9443 -p $POPort:9000 -v $PODocker:/var/run/docker.sock -v $POConfig:/data portainer/portainer-ce:latest
 		sudo docker run -d --name Grocy --restart=unless-stopped -e TZ=CET -v $GOConfig:/config  -p $GOPort:80  lscr.io/linuxserver/grocy:latest
@@ -72,7 +72,7 @@ case $1 in
 		sudo docker run -d --name Homeassistant --privileged --restart=unless-stopped -e TZ=CET -v $HAConfig:/config -p 6666:6666 -p 6667:6667 -p $HAPort:8123 homeassistant/home-assistant:latest
 	;;
 	"jellyfin")
-		sudo docker run -d --name Jellyfin --restart=unless-stopped -e TZ=CET -v $JFConfig:/config -v $JFData:/media -v $JFCache:/cache -p $JFPort:8096 -p 8920:8920 jellyfin/jellyfin:latest
+		sudo docker run -d --name Jellyfin --restart=unless-stopped -d /dev/dri/renderD128:/dev/dri/renderD128 -e TZ=CET -v $JFConfig:/config -v $JFData:/media -v $JFCache:/cache -p $JFPort:8096 -p 8920:8920 jellyfin/jellyfin:latest
 	;;
 	"filebrowser")
 		sudo docker run -d --name Filebrowser --privileged --restart=unless-stopped -e TZ=CET -v $FBData:/srv -v $FBBase:/database -v $FBConfig:/config/ -p $FBPort:80 filebrowser/filebrowser:latest
