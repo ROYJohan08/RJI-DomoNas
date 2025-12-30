@@ -40,7 +40,7 @@ DBData="/media/Runable/DownBox"
 
 SBPort=1003
 SBConfig="/media/Runable/Docker/SB-Config"
-SBData="/media/Runable/SeedBox" 
+SBData="/media/Runable/DownBox" 
 
 case $1 in
 	"all")
