@@ -1,16 +1,15 @@
 #!/bin/sh
 source /etc/RJIDomoNas/credentials.sh
 
-echo "Cration des dossiers si ils n'existent pas"
-mkdir -p /media/Films01 /media/Films02 /media/Series01 /media/Series02 /media/Series03 /media/Docs01 /media/Runable /media/Temp /media/Archive
-
-
 add_to_fstab() {
-    UUID=$1
-    MOUNT_POINT=$2
-    if ! grep -qs "$UUID" /etc/fstab; then
-        echo "L'UUID n'existe pas dans le fstab, ajout de l'UUID $UUID avec le point de montage $MOUNT_POINT dans le fstab"
-        echo "UUID=$UUID $MOUNT_POINT auto nosuid,nodev,nofail,xtime,umask=000 0 0" >> /etc/fstab
+    local UUID=$1
+    local MOUNT_POINT=$2
+    if [ -n "$UUID" ] && ! grep -q "$UUID" /etc/fstab; then
+        echo "L'UUID n'existe pas dans le fstab, ajout de l'UUID $UUID sur $MOUNT_POINT"
+        mkdir -p "$MOUNT_POINT"
+        echo "UUID=$UUID $MOUNT_POINT auto nosuid,nodev,nofail,umask=000 0 0" >> /etc/fstab
+    else
+        echo "L'UUID $UUID est vide ou déjà présent dans /etc/fstab."
     fi
 }
 add_to_fstab $UIDSeries01 "/media/Series01"
@@ -19,7 +18,7 @@ add_to_fstab $UIDSeries03 "/media/Series03"
 add_to_fstab $UIDFilms01 "/media/Films01"
 add_to_fstab $UIDFilms02 "/media/Films02"
 add_to_fstab $UIDDocs01 "/media/Docs01"
-add_to_fstab $UIDRunable "/media/Runable"
+add_to_fstab "00C52F7F6202AA50" "/media/Runable"
 add_to_fstab $UIDArchive "/media/Archive"
 
 echo "Montage de tous les disques"
