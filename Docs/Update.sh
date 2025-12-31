@@ -65,8 +65,6 @@ if test -f "$FILE"; then
     rm -rf /etc/RJIDomoNas/credentials.sh
     cp /media/Runable/Docker/credentials.sh /etc/RJIDomoNas/credentials.sh
     echo "Remplacement du fichier de mot de passe par une sauvegarde : PASS" >> /etc/RJIDomoNas/Log/Update.log
-else 
-    
 fi
 
 sudo -u "$SUDO_USER" bash /etc/RJIDomoNas/InstallDrives.sh
