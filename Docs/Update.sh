@@ -1,87 +1,87 @@
 #!/bin/bash
 
-mkdir /etc/RJIDomoNas/
-mkdir /etc/RJIDomoNas/Old/
-mkdir /etc/RJIDomoNas/Log/
-chmod -R 777 /etc/RJIDomoNas/
-chown -R royjohan:royjohan /etc/RJIDomoNas/
+mkdir /etc/RJIDomoNas/ > /dev/null
+mkdir /etc/RJIDomoNas/Old/ > /dev/null
+mkdir /etc/RJIDomoNas/Log/ > /dev/null
+chmod -R 777 /etc/RJIDomoNas/ > /dev/null
+chown -R royjohan:royjohan /etc/RJIDomoNas/ > /dev/null
 echo "Creation des fichiers de travail : PASS" > /etc/RJIDomoNas/Log/Update.log
 
-apt-get update -y
-apt-get full-upgrade -y
-apt-get autoremove -y
-apt-get autoclean -y
-apt-get clean -y
+apt-get update -y > /dev/null
+apt-get full-upgrade -y > /dev/null
+apt-get autoremove -y > /dev/null
+apt-get autoclean -y > /dev/null
+apt-get clean -y > /dev/null
 echo "Installation des mises à jours et nettoyage des paquets : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-apt-get install ca-certificates curl gnupg -y
+apt-get install ca-certificates curl gnupg -y > /dev/null
 install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-chmod a+r /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg > /dev/null
 echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 add-apt-repository ppa:alessandro-strada/ppa
-apt-get update -y
-apt-get full-upgrade -y
-apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+apt-get update -y > /dev/null
+apt-get full-upgrade -y > /dev/null
+apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y > /dev/null
 echo "Installation de docker : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
 
-apt-get install git-all -y
-apt-get install net-tools -y
-apt-get install iperf -y
-ubuntu-drivers list --gpgpu
+apt-get install git-all -y > /dev/null
+apt-get install net-tools -y > /dev/null
+apt-get install iperf -y > /dev/null
+ubuntu-drivers list --gpgpu > /dev/null
 echo "Installation de Git, net-tools, iperf et des driver gpgpu : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-apt-get install smartmontools -y
+apt-get install smartmontools -y > /dev/null
 echo "Installation des utilitaires de disks : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-apt-get install samba -y
-service smbd stop
-mv -f /etc/samba/smb.conf /etc/RJIDomoNas/Old/smb.conf
-wget -O /etc/samba/smb.conf https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf
-service smbd start
+apt-get install samba -y > /dev/null
+service smbd stop > /dev/null
+mv -f /etc/samba/smb.conf /etc/RJIDomoNas/Old/smb.conf > /dev/null
+wget -O /etc/samba/smb.conf https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/smb.conf > /dev/null
+service smbd start > /dev/null
 echo "Installation et configuration de samba : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-apt-get install glances -y
-systemctl disable glances.service 
-mv -f /etc/systemd/system/glances.service /etc/RJIDomoNas/Old/glances.service
-wget -O /etc/systemd/system/glances.service https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/glances.service
-systemctl enable glances.service
+apt-get install glances -y > /dev/null
+systemctl disable glances.service  > /dev/null
+mv -f /etc/systemd/system/glances.service /etc/RJIDomoNas/Old/glances.service > /dev/null
+wget -O /etc/systemd/system/glances.service https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/glances.service > /dev/null
+systemctl enable glances.service > /dev/null
 echo "Installation et configuration de glances : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-wget -O /etc/RJIDomoNas/InstallDrives.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh
-sudo -u "$SUDO_USER" bash /etc/RJIDomoNas/InstallDrives.sh
+wget -O /etc/RJIDomoNas/InstallDrives.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/InstallDrives.sh > /dev/null
+sudo -u "$SUDO_USER" bash /etc/RJIDomoNas/InstallDrives.sh > /dev/null
 echo "Instalation des disques par defaut : WARNING" >> /etc/RJIDomoNas/Log/Update.log
 
 FILE=/etc/RJIDomoNas/credentials.sh
 if test -f "$FILE"; then
     echo "Le fichier de mot de passe est déjà présent : WARNING" >> /etc/RJIDomoNas/Log/Update.log
 else 
-    wget -O /etc/RJIDomoNas/credentials.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/credentials.sh
+    wget -O /etc/RJIDomoNas/credentials.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/credentials.sh > /dev/null
     echo "Récupération du fichier de mot de passe par defaut : PASS" >> /etc/RJIDomoNas/Log/Update.log
 fi
 FILE=/media/Runable/Docker/credentials.sh
 if test -f "$FILE"; then
-    rm -rf /etc/RJIDomoNas/credentials.sh
-    cp /media/Runable/Docker/credentials.sh /etc/RJIDomoNas/credentials.sh
+    rm -rf /etc/RJIDomoNas/credentials.sh > /dev/null
+    cp /media/Runable/Docker/credentials.sh /etc/RJIDomoNas/credentials.sh > /dev/null
     echo "Remplacement du fichier de mot de passe par une sauvegarde : PASS" >> /etc/RJIDomoNas/Log/Update.log
 fi
 
-bash /etc/RJIDomoNas/InstallDrives.sh
+bash /etc/RJIDomoNas/InstallDrives.sh > /dev/null
 echo "Installation de tous les disques : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-wget -O /etc/RJIDomoNas/Docker.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
+wget -O /etc/RJIDomoNas/Docker.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh > /dev/null
 echo "Récupération de Docker.sh : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-rm -rf /home/royjohan/.bashrc.*
-rm -rf /root/.bashrc.*
-mv -f /home/royjohan/.bashrc /etc/RJIDomoNas/Old/royjohan.bashrc
-mv -f /root/.bashrc /etc/RJIDomoNas/Old/root.bashrc
-wget -O /home/royjohan/.bashrc https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc
-cp -f /home/royjohan/.bashrc /root/.bashrc
-sudo -u "$SUDO_USER" bash -c "source /home/royjohan/.bashrc"
-source /root/.bashrc
+rm -rf /home/royjohan/.bashrc.* > /dev/null
+rm -rf /root/.bashrc.* > /dev/null
+mv -f /home/royjohan/.bashrc /etc/RJIDomoNas/Old/royjohan.bashrc > /dev/null
+mv -f /root/.bashrc /etc/RJIDomoNas/Old/root.bashrc > /dev/null
+wget -O /home/royjohan/.bashrc https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/.bashrc > /dev/null
+cp -f /home/royjohan/.bashrc /root/.bashrc > /dev/null
+sudo -u "$SUDO_USER" bash -c "source /home/royjohan/.bashrc" > /dev/null
+source /root/.bashrc > /dev/null
 echo "Modification des alias : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
-wget -O /etc/RJIDomoNas/Archive.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/main/Docs/Archive.sh
+wget -O /etc/RJIDomoNas/Archive.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/main/Docs/Archive.sh > /dev/null
 echo "Installation du systeme d'archivage : PASS" >> /etc/RJIDomoNas/Log/Update.log
