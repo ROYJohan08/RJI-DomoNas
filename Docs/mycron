@@ -1,6 +1,6 @@
 @reboot glances -w &
 @reboot iperf -s
-@reboot mount -a
+@reboot mount -a --onlyonce
 @reboot upup
 @reboot rjiup
 @hourly mount -a --onlyonce
