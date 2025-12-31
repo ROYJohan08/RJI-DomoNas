@@ -19,7 +19,6 @@ add_to_fstab $UIDFilms01 "/media/Films01"
 add_to_fstab $UIDFilms02 "/media/Films02"
 add_to_fstab $UIDDocs01 "/media/Docs01"
 add_to_fstab "00C52F7F6202AA50" "/media/Runable"
-add_to_fstab $UIDArchive "/media/Archive"
 
 echo "Montage de tous les disques"
 mount -a --onlyonce
