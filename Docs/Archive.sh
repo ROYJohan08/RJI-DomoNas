@@ -17,9 +17,6 @@ then
 	echo "Archivage ---- Archivage des Docker..." >> /media/Archive/Log.dat
  	cp -a -d -f -R -u -v /media/Runable/Docker/* /media/Archive/Runable/Docker/  >> /media/Archive/Log.dat
   	echo "Archivage ---- Archivage des Docker...OK" >> /media/Archive/Log.dat
-   	echo "Archivage ---- Archivage de la SeedBox..." >> /media/Archive/Log.dat
-	cp -a -d -f -R -u -v /media/Runable/DownBox/SeedBox/* /media/Archive/Runable/SeedBox/  >> /media/Archive/Log.dat
- 	echo "Archivage ---- Archivage de la SeedBox...OK" >> /media/Archive/Log.dat
   	echo "Archivage ---- Archivage des '-A' du disque Series01..." >> /media/Archive/Log.dat
 	cp -a -d -f -R -u -v /media/Series01/*-A/ /media/Archive/Series/  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des '-A' du disque Series01...OK" >> /media/Archive/Log.dat
@@ -58,6 +55,9 @@ then
 	cp -a -d -f -R -u -v /media/Docs01/Jeux/*-A.* /media/Archive/Docs/Jeux/  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des '-A' des jeux...OK" >> /media/Archive/Log.dat
 	echo "Archivage ---- Srockage de la date" >> /media/Archive/Log.dat
+	echo "Archivage ---- Archivage de la SeedBox..." >> /media/Archive/Log.dat
+	cp -a -d -f -R -u -v /media/Runable/DownBox/SeedBox/* /media/Archive/Runable/SeedBox/  >> /media/Archive/Log.dat
+ 	echo "Archivage ---- Archivage de la SeedBox...OK" >> /media/Archive/Log.dat
  	echo "$(date "+%d/%m/%y %H:%M:%S")" > /media/Archive/LastArchive.dt
   	echo "Archivage ---- Archivage ---- FIN" >> /media/Archive/Log.dat
 fi
