@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source /etc/RJIDomoNas/credentials.sh
+
 mount -a --onlyonce
 if mount | grep -q 'on /media/Archive '
 then
