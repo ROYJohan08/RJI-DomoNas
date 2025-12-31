@@ -1,15 +1,10 @@
 #!/bin/sh
 
+mount -a --onlyonce
 if mount | grep -q 'on /media/Archive '
 then
-
-    ##################################################
-    #                  Create folders                #
-    ##################################################
-
 	echo "Archivage ---- Creation des dossiers... "
-   # Crée tous les dossiers en une seule fois, y compris les parents, sans erreur si existant
-mkdir -p /media/Archive/Runable/Docker/ \
+	mkdir -p /media/Archive/Runable/Docker/ \
          /media/Archive/Films/ \
          /media/Archive/Series/ \
          /media/Archive/Docs/"+18"/ \
@@ -18,16 +13,12 @@ mkdir -p /media/Archive/Runable/Docker/ \
          /media/Archive/Docs/Livres/ \
          /media/Archive/Docs/Jeux/ >/dev/null
 	echo "Archivage ---- Creation des dossiers... OK"
-	
-    ##################################################
-    #                  Archive datas                 #
-    ##################################################
-    
+
 	echo "Archivage ---- Archivage des Docker..."
  	cp -a -d -f -R -u -v /media/Runable/Docker/* /media/Archive/Runable/Docker/  >> /media/Archive/Log.dat
   	echo "Archivage ---- Archivage des Docker...OK"
    	echo "Archivage ---- Archivage de la SeedBox..."
-	cp -a -d -f -R -u -v /media/Runable/SeedBox/* /media/Archive/Runable/SeedBox/  >> /media/Archive/Log.dat
+	cp -a -d -f -R -u -v /media/Runable/DownBox/SeedBox/* /media/Archive/Runable/SeedBox/  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage de la SeedBox...OK"
   	echo "Archivage ---- Archivage des '-A' du disque Series01..."
 	cp -a -d -f -R -u -v /media/Series01/*-A/ /media/Archive/Series/  >> /media/Archive/Log.dat
@@ -47,6 +38,11 @@ mkdir -p /media/Archive/Runable/Docker/ \
 	cp -a -d -f -R -u -v /media/Films02/*/*-A.* /media/Archive/Films/  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des '-A' du disque Film02...OK"
   	echo "Archivage ---- Archivage des documents +18..."
+	
+	
+	
+	
+	
 	cp -a -d -f -R -u -v "/media/Docs01/+18/"* "/media/Archive/Docs/+18/"  >> /media/Archive/Log.dat
  	echo "Archivage ---- Archivage des documents +18...OK"
   	echo "Archivage ---- Archivage des musiques..."
