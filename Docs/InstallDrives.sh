@@ -6,8 +6,8 @@ add_to_fstab() {
     local MOUNT_POINT=$2
     if [ -n "$UUID" ] && ! grep -q "$UUID" /etc/fstab; then
         echo "L'UUID n'existe pas dans le fstab, ajout de l'UUID $UUID sur $MOUNT_POINT" >> /etc/RJIDomoNas/Log/default.log
-        mkdir -p "$MOUNT_POINT"
-        echo "UUID=$UUID $MOUNT_POINT auto nosuid,nodev,nofail,umask=000 0 0" >> /etc/fstab
+        sudo -u "$SUDO_USER" mkdir -p "$MOUNT_POINT"
+        sudo -u "$SUDO_USER" echo "UUID=$UUID $MOUNT_POINT auto nosuid,nodev,nofail,umask=000 0 0" >> /etc/fstab
         echo "Ecriture dans le /etc/fstab de : UUID=$UUID $MOUNT_POINT auto nosuid,nodev,nofail,umask=000 0 0" >> /etc/RJIDomoNas/Log/default.log
     else
         echo "L'UUID $UUID est vide ou déjà présent dans /etc/fstab." >> /etc/RJIDomoNas/Log/default.log
