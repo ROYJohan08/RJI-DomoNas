@@ -1,46 +1,6 @@
 #!/bin/sh
 
 source /etc/RJIDomoNas/credentials.sh
-# Do 'id royjohan' and run
-USER_ID=1000
-GROUP_ID=1000
-
-LMPort=80
-LMData="/media/Runable/Docker/LM-Data"
-
-HAPort=1000
-HAConfig="/media/Runable/Docker/HA-Config"
-
-JFPort=1001
-JFConfig="/media/Runable/Docker/JF-Config"
-JFCache="/media/Runable/Docker/JF-Cache"
-JFData="/media/"
-
-FBPort=1006
-FBConfig="/media/Runable/Docker/FB-Config/"
-FBData="/media/"
-FBBase="/media/Runable/Docker/FB-Database/"
-
-POPort=1005
-PODocker="/var/run/docker.sock"
-POConfig="/media/Runable/Docker/PO-Config"
-
-GOPort=1004
-GOConfig="/media/Runable/Docker/GO-Config/"
-
-MQPort=1007
-MQConfig="/media/Runable/Docker/MQ-Config/"
-MQData="/media/Runable/Docker/MQ-Data"
-MQPassword="/mosquitto/config/password.txt"
-
-DBPort=1002
-DBConfig="/media/Runable/Docker/DB-Config"
-DBCustom="/media/Runable/Docker/DB-Config/custom"
-DBData="/media/Runable/DownBox"
-
-SBPort=1003
-SBConfig="/media/Runable/Docker/SB-Config"
-SBData="/media/Runable/DownBox" 
 
 case $1 in
 	"all")
@@ -104,9 +64,3 @@ case $1 in
 		sudo docker exec Seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
 	;;
 esac
-
-##################################################
-#    @Date : 05/12/2025 12:14                    #
-#    @Author : @ROYJohan                         #
-#    @Version : 12b                              #
-##################################################
