@@ -67,7 +67,7 @@ if test -f "$FILE"; then
     echo "Remplacement du fichier de mot de passe par une sauvegarde : PASS" >> /etc/RJIDomoNas/Log/Update.log
 fi
 
-sudo -u "$SUDO_USER" bash /etc/RJIDomoNas/InstallDrives.sh
+bash /etc/RJIDomoNas/InstallDrives.sh
 echo "Installation de tous les disques : PASS" >> /etc/RJIDomoNas/Log/Update.log
 
 wget -O /etc/RJIDomoNas/Docker.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/Docker.sh
