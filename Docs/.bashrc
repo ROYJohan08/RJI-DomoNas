@@ -47,7 +47,7 @@ fi
 ##################################################
 
 alias ll='ls -alF'
-alias la='ls -A'
+alias la='ls -all'
 alias l='ls -CF'
 alias cddomonas='cd /etc/RJIDomoNas/'
 alias cdseries1='cd /media/Series01'
@@ -55,10 +55,10 @@ alias cdseries2='cd /media/Series02'
 alias cdseries3='cd /media/Series03'
 alias cdfilms1='cd /media/Films01'
 alias cdfilms2='cd /media/Films02'
-alias cddownbox='cd /media/Runable/DownBox/completed/'
-alias cdseedbox='cd /media/Runable/SeedBox/'
+alias cddownbox='cd /media/Runable/DownBox/DownBox/'
+alias cdseedbox='cd /media/Runable/DownBox/SeedBox/'
 alias cddocs1='cd /media/Docs01/'
-alias cdrunable='cd /media/Runable'
+alias cdrunable='cd /media/Runable/'
 
 ##################################################
 #                Commands alias                  #
@@ -69,7 +69,7 @@ alias lsvm='docker ps'
 alias sudo='sudo '
 alias samba='service smbd'
 alias glances='glances -w &'
-alias cparchive='cp -a -d -f -R -u -v '
+alias cpa='cp -a -d -f -R -u -v '
 alias archive='bash /etc/RJIDomoNas/Archive.sh '
 
 ##################################################
