@@ -85,4 +85,7 @@ echo "Modification des alias: SUCCESS" >> /etc/RJIDomoNas/Log/Update.log
 
 wget -O /etc/RJIDomoNas/Archive.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/main/Docs/Archive.sh > /dev/null
 echo "Installation du systeme d'archivage: SUCCESS" >> /etc/RJIDomoNas/Log/Update.log
+
+wget -O /etc/Runable/DownBox/seedbox.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/seedbox.sh > /dev/null
+echo "Installation du systeme de gestion de seedbox: SUCCESS" >> /etc/RJIDomoNas/Log/Update.log
 echo "Fin du SCRIPT" >> /etc/RJIDomoNas/Log/Update.log
