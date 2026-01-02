@@ -42,4 +42,4 @@ DBData="/media/Runable/DownBox"
 SBPort=
 SBConfig="/media/Runable/Docker/SB-Config"
 SBData="/media/Runable/DownBox" 
-IMDBApiToken=""
+TMDBApiToken=""
