@@ -63,4 +63,6 @@ case $1 in
 		sudo docker exec Seedbox cp -r /config/GUI/src/favicon.ico /usr/share/transmission/public_html/
 		sudo docker exec Seedbox cp -r /config/GUI/src/tr-web-control/ /usr/share/transmission/public_html/
 	;;
+	"readeck")
+		sudo docker run -d --name Readeck --privileged --restart=unless-stopped -e TZ=CET -p $RSPort:8000 -e READECK_SERVER_PORT=8000 -v $RSData:/readeck codeberg.org/readeck/readeck:latest
 esac
