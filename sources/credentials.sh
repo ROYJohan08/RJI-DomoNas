@@ -17,6 +17,17 @@ PathFilms02=""
 PathFilms03=""
 PathRunable=""
 
+UidDocs01=""
+UidDocs02=""
+UidDocs03=""
+UidSeries01=""
+UidSeries02=""
+UidSeries03=""
+UidFilms01=""
+UidFilms02=""
+UidFilms03=""
+UidRunable=""
+
 
 PortLamp=
 PortHomeAssistant=
@@ -37,7 +48,7 @@ PathDKFileBrowser1="${PathRunable}/Docker/FB-Config"
 PathDKFileBrowser2="/media/"
 PathDKFileBrowser3="${PathRunable}/Docker/FB-Database"
 PathDkPortainer1="/var/run/docker.sock"
-PathDkPortainer1="${PathRunable}/Docker/PO-Config"
+PathDkPortainer2="${PathRunable}/Docker/PO-Config"
 PathDkGrocy="${PathRunable}/Docker/GO-Config"
 PathDkMqtt1="${PathRunable}/Docker/MQ-Config"
 PathDkMqtt2="${PathRunable}/Docker/MQ-Data"
@@ -47,6 +58,8 @@ PathDkDownBox2="${PathRunable}/Docker/DB-Config/custom"
 PathDkDownBox3="${PathRunable}/DownBox"
 PathDkSeedBox1="${PathRunable}/Docker/SB-Config"
 PathDkSeedBox2="${PathRunable}/DownBox"
+PathDkFreshRss="${PathRunable}/Docker/RS-Data"
+
 USER_ID=1000
 GROUP_ID=1000
 
