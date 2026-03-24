@@ -51,22 +51,22 @@ echo "Utilitaires (Git, Net, Disques, Samba, Glances) : SUCCESS" >> "$LOG_FILE"
 # --- Configuration Samba ---
 service smbd stop > /dev/null
 [ -f /etc/samba/smb.conf ] && mv -f /etc/samba/smb.conf /etc/RJIDomoNas/Old/smb.conf
-wget -qO /etc/samba/smb.conf https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/NAS/smb.conf
+wget -qO /etc/samba/smb.conf https://raw.githubusercontent.com/ROYJohan08/RJI-Domonas/refs/heads/main/sources/smb.conf
 service smbd start > /dev/null
 
 # --- Configuration Glances ---
 systemctl disable glances.service > /dev/null
 [ -f /etc/systemd/system/glances.service ] && mv -f /etc/systemd/system/glances.service /etc/RJIDomoNas/Old/glances.service
-wget -qO /etc/systemd/system/glances.service https://raw.githubusercontent.com/ROYJohan08/DomotikHomeNas/main/Docs/NAS/glances.service
+wget -qO /etc/systemd/system/glances.service https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/glances.service
 systemctl enable glances.service > /dev/null
 
 # --- Gestion des disques et Credentials ---
-wget -qO /etc/RJIDomoNas/InstallDrives.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/NAS/InstallDrives.sh
+wget -qO /etc/RJIDomoNas/InstallDrives.sh https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/installdrives.sh
 # On lance l'installation des disques
 sudo -u "$SUDO_USER" bash /etc/RJIDomoNas/InstallDrives.sh
 
 if [ ! -f /etc/RJIDomoNas/credentials.sh ]; then
-    wget -qO /etc/RJIDomoNas/credentials.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/NAS/credentials.sh
+    wget -qO /etc/RJIDomoNas/credentials.sh https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/credentials.sh
 fi
 
 if [ -f /media/Runable/Docker/credentials.sh ]; then
@@ -75,7 +75,7 @@ if [ -f /media/Runable/Docker/credentials.sh ]; then
 fi
 
 # --- Docker.sh ---
-wget -qO /etc/RJIDomoNas/Docker.sh https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/NAS/Docker.sh
+wget -qO /etc/RJIDomoNas/Docker.sh https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/docker.sh
 if [ "$MODE" == "INSTALL" ]; then
     bash /etc/RJIDomoNas/Docker.sh all
     echo "Lancement Docker.sh (Initial) : SUCCESS" >> "$LOG_FILE"
@@ -84,20 +84,20 @@ fi
 # --- Bashrc & Aliases ---
 rm -rf /home/royjohan/.bashrc.* /root/.bashrc.*
 [ -f /home/royjohan/.bashrc ] && mv -f /home/royjohan/.bashrc /etc/RJIDomoNas/Old/royjohan.bashrc
-wget -qO /home/royjohan/.bashrc https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/NAS/.bashrc
+wget -qO /home/royjohan/.bashrc https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/.bashrc
 cp -f /home/royjohan/.bashrc /root/.bashrc
 # On applique les changements pour la session actuelle
 source /root/.bashrc
 
 # --- Scripts additionnels (Archive & Seedbox) ---
-wget -qO /etc/RJIDomoNas/Archive.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/main/Docs/NAS/Archive.sh
-wget -qO /etc/Runable/DownBox/seedbox.sh https://raw.githubusercontent.com/ROYJohan08/RJI-DomoNas/refs/heads/main/Docs/NAS/seedbox.sh 2>/dev/null
+wget -qO /etc/RJIDomoNas/Archive.sh https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/archive.sh
+wget -qO /etc/Runable/DownBox/seedbox.sh https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/seedbox.sh 2>/dev/null
 
 # --- Blocs spécifiques à l'INSTALLATION initiale ---
 if [ "$MODE" == "INSTALL" ]; then
     # Cron
     apt-get install cron -y > /dev/null
-    wget -qO /etc/RJIDomoNas/mycron https://github.com/ROYJohan08/DomotikHomeNas/raw/main/Docs/NAS/mycron
+    wget -qO /etc/RJIDomoNas/mycron https://github.com/ROYJohan08/RJI-Domonas/raw/refs/heads/main/sources/mycron
     sudo crontab /etc/RJIDomoNas/mycron
 
     # Désactivation Veille
