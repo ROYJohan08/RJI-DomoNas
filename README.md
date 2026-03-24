@@ -25,4 +25,4 @@
 - Téléchargez [Rufus](https://rufus.ie/fr/).
 - Via Rufus, installez Ubuntu Server sur une clé USB.
 - Installez ubuntu server sur l'ordinateur.
-- Dans le shell, lancez la commande : ``.
+- Dans le shell, lancez la commande : `sudo wget https://raw.githubusercontent.com/ROYJohan08/RJI-Domonas/refs/heads/main/Install.sh | sudo bash`.
