@@ -1,0 +1,7 @@
+@reboot glances -w &
+@reboot iperf -s
+@reboot mount -a --onlyonce
+@reboot upup
+@reboot rjiup
+@hourly mount -a --onlyonce
+50 6 * * * /bin/bash /etc/RJIDomoNas/archive.sh &
