@@ -333,7 +333,7 @@ case "$1" in
 	;;
 	"freescout")
 		sudo docker rm -f peppermint
-		sudo docker pull peppermintlab/peppermint:latest
+		sudo docker pull pepperlabs/peppermint:latest
 		docker run -d \
 		  --name peppermint \
 		  -p 1015:3000 \
@@ -341,7 +341,7 @@ case "$1" in
 		  -e SECRET=ChangeCeSecretAvecUneChaineAleatoire \
 		  -v /media/Runable/Docker/peppermint-Data:/app/data \
 		  --restart unless-stopped \
-		  peppermintlab/peppermint:latest
+		  pepperlabs/peppermint:latest
   ;;
 	"all")
 		for svc in lamp homeassistant jellyfin filebrowser portainer grocy mqtt downbox seedbox freshrss med kiwix gitea kolibri cyberchef; do
