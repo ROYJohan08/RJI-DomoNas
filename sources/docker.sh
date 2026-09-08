@@ -331,17 +331,15 @@ case "$1" in
   			-out /media/Runable/Docker/VA-Data/filename.crt \
   			-subj "/CN=dsm.royjohan.fr"
 	;;
-	"freescout")
-		sudo docker rm -f peppermint
-		sudo docker pull pepperlabs/peppermint:latest
-		docker run -d \
-		  --name peppermint \
-		  -p 1015:3000 \
-		  -e DB_TYPE=sqlite \
-		  -e SECRET=ChangeCeSecretAvecUneChaineAleatoire \
-		  -v /media/Runable/Docker/peppermint-Data:/app/data \
+	"osticket")
+		sudo docker rm -f osticket
+		sudo docker pull osticket/osticket:latest
+		sudo docker run -d \
+		  --name osticket \
+		  -p 1015:80 \
+		  -v /media/Runable/Docker/osticket-Data:/var/www/html \
 		  --restart unless-stopped \
-		  pepperlabs/peppermint:latest
+		  osticket/osticket:latest
   ;;
 	"all")
 		for svc in lamp homeassistant jellyfin filebrowser portainer grocy mqtt downbox seedbox freshrss med kiwix gitea kolibri cyberchef; do
