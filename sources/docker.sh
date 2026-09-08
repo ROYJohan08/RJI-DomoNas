@@ -332,17 +332,16 @@ case "$1" in
   			-subj "/CN=dsm.royjohan.fr"
 	;;
 	"freescout")
-		sudo docker rm -f freescout
-		sudo docker pull tiredofit/freescout:latest
+		sudo docker rm -f peppermint
+		sudo docker pull peppermintlab/peppermint:latest
 		docker run -d \
-  		--name freescout \
-  		-p 1015:80 \
-  		-e DB_TYPE=sqlite \
-  		-e SITE_URL=http://dsm.royjohan.fr:1015 \
-	  	-v /media/Runable/Docker/freescout-Data:/data \
-  		-v /media/Runable/Docker/freescout-Logs:/logs \
-	  	--restart unless-stopped \
-  		tiredofit/freescout:latest
+		  --name peppermint \
+		  -p 1015:3000 \
+		  -e DB_TYPE=sqlite \
+		  -e SECRET=ChangeCeSecretAvecUneChaineAleatoire \
+		  -v /media/Runable/Docker/peppermint-Data:/app/data \
+		  --restart unless-stopped \
+		  peppermintlab/peppermint:latest
   ;;
 	"all")
 		for svc in lamp homeassistant jellyfin filebrowser portainer grocy mqtt downbox seedbox freshrss med kiwix gitea kolibri cyberchef; do
