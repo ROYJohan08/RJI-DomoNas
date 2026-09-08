@@ -321,7 +321,7 @@ case "$1" in
   			-e ROCKET_TLS='{certs="/data/ssl/filename.crt",key="/data/ssl/filename.key"}' \
   			-e WEBSOCKET_ENABLED=true \
   			-v /vw-data:/data \
-  			-p 1205:80 \
+  			-p 1013:80 \
   			-p 3012:3012 \
   			--restart unless-stopped \
   			vaultwarden/server:latest
@@ -331,6 +331,19 @@ case "$1" in
   			-out /media/Runable/Docker/VA-Data/filename.crt \
   			-subj "/CN=dsm.royjohan.fr"
 	;;
+	"freescout")
+		sudo docker rm -f freescout
+		sudo docker pull tiredofit/freescout:latest
+		docker run -d \
+  		--name freescout \
+  		-p 1015:80 \
+  		-e DB_TYPE=sqlite \
+  		-e SITE_URL=http://dsm.royjohan.fr:1015 \
+	  	-v /media/Runable/Docker/freescout-Data:/data \
+  		-v /media/Runable/Docker/freescout-Logs:/logs \
+	  	--restart unless-stopped \
+  		tiredofit/freescout:latest
+  ;;
 	"all")
 		for svc in lamp homeassistant jellyfin filebrowser portainer grocy mqtt downbox seedbox freshrss med kiwix gitea kolibri cyberchef; do
 			"$0" "$svc"
